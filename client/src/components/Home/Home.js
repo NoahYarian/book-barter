@@ -1,10 +1,17 @@
 import React from 'react';
-import { Button } from '@mui/material';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import Userfront from "@userfront/react";
 
 const Home = () => {
+
+    const SignupForm = Userfront.build({
+      toolId: process.env.REACT_APP_USERFRONT_SIGNUP
+    });
+
     return (
-        <Button size="large" variant="contained" startIcon={<SwapHorizIcon />}>Trade Books</Button>
+        <div>
+            <h1>Home</h1>
+            <SignupForm />
+        </div>
     );
 }
 
