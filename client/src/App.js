@@ -1,9 +1,19 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Container } from '@mui/material';
+
+import Home from "./components/Home/Home";
+import Auth from "./components/Auth/Auth";
 
 const App = () => (
-    <Button size="large" variant="contained" startIcon={<SwapHorizIcon />}>Trade Books</Button>
+    <BrowserRouter>
+        <Container>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<Auth />} />
+            </Routes>
+        </Container>
+    </BrowserRouter>
 );
 
 export default App;
