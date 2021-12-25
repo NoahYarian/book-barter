@@ -1,8 +1,15 @@
 import React from 'react';
 
+import BookList from '../BookList/BookList';
+import AddBookForm from '../AddBookForm/AddBookForm';
+
 const Wishlist = () => {
     return (
-        <h1>Wishlist</h1>
+        <div>
+            <h1>Wishlist</h1>
+            <BookList />
+            <AddBookForm />
+        </div>
     );
 }
 
