@@ -4,11 +4,16 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import bookRoutes from './routes/books.js';
+
 const app = express();
 dotenv.config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
+app.use('/books', bookRoutes);
 
 app.get('/', (req, res) => {
     res.send("Welcome to the API!");
