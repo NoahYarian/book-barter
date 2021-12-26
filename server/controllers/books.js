@@ -24,3 +24,13 @@ export const createBook = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+
+export const deleteBook = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No book with that id');
+
+    const book = await Book.findByIdAndRemove(id);
+
+    res.json({ message: 'Book deleted successfully' });
+}

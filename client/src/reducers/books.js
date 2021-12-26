@@ -1,4 +1,4 @@
-import { GET_BOOKS, CREATE_BOOK } from '../constants/actionTypes';
+import { GET_BOOKS, CREATE_BOOK, DELETE_BOOK } from '../constants/actionTypes';
 
 const booksReducer = (books = [], action) => {
     switch (action.type) {
@@ -6,6 +6,8 @@ const booksReducer = (books = [], action) => {
             return action.payload;
         case CREATE_BOOK:
             return [...books, action.payload];
+        case DELETE_BOOK:
+            return books.filter((book) => book._id !== action.payload);
         default:
             return books;
     }

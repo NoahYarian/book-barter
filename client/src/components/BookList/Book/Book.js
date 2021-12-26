@@ -1,7 +1,12 @@
-import { Card, Typography } from '@mui/material';
+import { Card, Typography, Button } from '@mui/material';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { deleteBook } from '../../../actions/books';
 
 const Book = ({ book }) => {
+    const dispatch = useDispatch();
+
     return (
         <Card>
             <Typography variant="h5">{book.title}</Typography>
@@ -11,6 +16,7 @@ const Book = ({ book }) => {
             <Typography variant="body2">Format: {book.format}</Typography>
             <Typography variant="body2">Condition: {book.condition}</Typography>
             <Typography variant="body2">Details: {book.details}</Typography>
+            <Button size="small" variant="contained" color="error" onClick={() => dispatch(deleteBook(book._id))}>Delete</Button>
         </Card>
     );
 }
