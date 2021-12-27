@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, useLocation } from 'react-router-dom';
 import Userfront from '@userfront/react';
 
-import Bookshelf from '../Bookshelf/Bookshelf';
+import BookCollection from '../BookCollection/BookCollection';
 // import Wishlist from '../Wishlist/Wishlist';
 // import Matches from '../Matches/Matches';
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
             <h1>Dashboard</h1>
             <pre>{userData}</pre>
             <button onClick={Userfront.logout}>Logout</button>
-            <Bookshelf />
+            <BookCollection />
             {/* <Wishlist /> */}
             {/* <Matches /> */}
         </div>
