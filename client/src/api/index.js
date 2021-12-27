@@ -1,6 +1,14 @@
 import axios from 'axios';
+import Userfront from '@userfront/react';
 
 const API = axios.create();
+
+API.interceptors.request.use((req) => {
+    if(Userfront.tokens?.accessToken) {
+        req.headers.Authorization = `Bearer ${Userfront.tokens.accessToken}`;
+    }
+    return req;
+});
 
 export const getBooks = () => API.get('/books');
 export const createBook = (newBook) => API.post('/books', newBook);
