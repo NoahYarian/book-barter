@@ -10,14 +10,14 @@ const Bookshelf = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getBooks());
+        dispatch(getBooks("bookshelf"));
     }, [dispatch]);
 
     return (
         <div>
             <h1>Bookshelf</h1>
-            <BookList setCurrentId={setCurrentId} />
-            <AddBookForm currentId={currentId} setCurrentId={setCurrentId} />
+            <BookList setCurrentId={setCurrentId} area="bookshelf" />
+            <AddBookForm currentId={currentId} setCurrentId={setCurrentId} area="bookshelf" />
         </div>
     );
 }

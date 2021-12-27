@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 
 import Book from './Book/Book';
 
-const BookList = ({ setCurrentId }) => {
+const BookList = ({ setCurrentId, area }) => {
     const books = useSelector((state) => state.books);
 
     return (

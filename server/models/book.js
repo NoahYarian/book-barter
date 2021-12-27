@@ -7,7 +7,9 @@ const bookSchema = new mongoose.Schema({
     year: String,
     format: String,
     condition: String,
-    details: String
+    details: String,
+    userId: String,
+    area: String
 });
 
 export default mongoose.model('Book', bookSchema);
