@@ -10,7 +10,7 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
-export const getBooks = (area) => API.get(`/books/${area}`);
+export const getBooks = () => API.get('/books');
 export const createBook = (newBook) => API.post('/books', newBook);
 export const deleteBook = (id) => API.delete(`/books/${id}`);
 export const updateBook = (id, updatedBook) => API.patch(`/books/${id}`, updatedBook);

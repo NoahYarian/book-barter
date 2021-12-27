@@ -10,14 +10,14 @@ const BookCollection = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getBooks("bookshelf"));
+        dispatch(getBooks());
     }, [dispatch]);
 
     return (
         <div>
             <h1>BookCollection</h1>
-            <BookGrid setCurrentId={setCurrentId} area="bookshelf" />
-            <AddBookForm currentId={currentId} setCurrentId={setCurrentId} area="bookshelf" />
+            <BookGrid setCurrentId={setCurrentId} />
+            <AddBookForm currentId={currentId} setCurrentId={setCurrentId} />
         </div>
     );
 }

@@ -2,10 +2,8 @@ import mongoose from 'mongoose';
 import Book from '../models/book.js';
 
 export const getBooks = async (req, res) => {
-    const { area } = req.params;
-
     try {
-        const books = await Book.find({ userId: req.userId, area });
+        const books = await Book.find();
 
         res.status(200).json(books);
     } catch (error) {

@@ -5,7 +5,7 @@ import Userfront from '@userfront/react';
 
 import { createBook, updateBook } from '../../actions/books';
 
-const AddBookForm = ({ currentId, setCurrentId, area }) => {
+const AddBookForm = ({ currentId, setCurrentId }) => {
     const dispatch = useDispatch();
 
     const initialState = { title: '', author: '', isbn: '', year: '', format: '', condition: '', details: '' };
@@ -22,12 +22,12 @@ const AddBookForm = ({ currentId, setCurrentId, area }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const bookDataWithUserIdAndArea = { ...bookData, userId, area };
+        const bookDataWithUserId = { ...bookData, userId };
 
         if (currentId) {
-            dispatch(updateBook(currentId, bookDataWithUserIdAndArea));
+            dispatch(updateBook(currentId, bookDataWithUserId));
         } else {
-            dispatch(createBook(bookDataWithUserIdAndArea));
+            dispatch(createBook(bookDataWithUserId));
         }
         clear();
     }

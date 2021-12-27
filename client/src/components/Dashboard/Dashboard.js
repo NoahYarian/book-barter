@@ -3,8 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import Userfront from '@userfront/react';
 
 import BookCollection from '../BookCollection/BookCollection';
-// import Wishlist from '../Wishlist/Wishlist';
-// import Matches from '../Matches/Matches';
+import Matches from '../Matches/Matches';
 
 const Dashboard = () => {
 
@@ -29,8 +28,7 @@ const Dashboard = () => {
             <pre>{userData}</pre>
             <button onClick={Userfront.logout}>Logout</button>
             <BookCollection />
-            {/* <Wishlist /> */}
-            {/* <Matches /> */}
+            <Matches />
         </div>
     );
 }

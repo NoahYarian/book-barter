@@ -8,8 +8,7 @@ const bookSchema = new mongoose.Schema({
     format: String,
     condition: String,
     details: String,
-    userId: String,
-    area: String
+    userId: String
 });
 
 export default mongoose.model('Book', bookSchema);
