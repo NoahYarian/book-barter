@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { getBooks } from '../../actions/books';
-import BookList from '../BookList/BookList';
+import BookGrid from '../BookGrid/BookGrid';
 import AddBookForm from '../AddBookForm/AddBookForm';
 
 const Bookshelf = () => {
@@ -16,7 +16,7 @@ const Bookshelf = () => {
     return (
         <div>
             <h1>Bookshelf</h1>
-            <BookList setCurrentId={setCurrentId} area="bookshelf" />
+            <BookGrid setCurrentId={setCurrentId} area="bookshelf" />
             <AddBookForm currentId={currentId} setCurrentId={setCurrentId} area="bookshelf" />
         </div>
     );

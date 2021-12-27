@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 
 import Book from './Book/Book';
 
-const BookList = ({ setCurrentId, area }) => {
+const BookGrid = ({ setCurrentId, area }) => {
     const books = useSelector((state) => state.books);
 
     return (
@@ -18,4 +18,4 @@ const BookList = ({ setCurrentId, area }) => {
     );
 }
 
-export default BookList;
+export default BookGrid;
