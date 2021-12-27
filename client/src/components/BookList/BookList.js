@@ -4,14 +4,14 @@ import { Grid } from '@mui/material';
 
 import Book from './Book/Book';
 
-const BookList = () => {
+const BookList = ({ setCurrentId }) => {
     const books = useSelector((state) => state.books);
 
     return (
         <Grid container>
             {books.map((book) => (
                 <Grid item key={book._id}>
-                    <Book book={book} />
+                    <Book book={book} setCurrentId={setCurrentId} />
                 </Grid>
             ))}
         </Grid>

@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Typography, TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
-import { createBook } from '../../actions/books';
+import { createBook, updateBook } from '../../actions/books';
 
-const AddBookForm = () => {
+const AddBookForm = ({ currentId, setCurrentId }) => {
+    const dispatch = useDispatch();
+
     const initialState = { title: '', author: '', isbn: '', year: '', format: '', condition: '', details: '' };
     const [bookData, setBookData] = useState(initialState);
-    const dispatch = useDispatch();
+
+    const book = useSelector((state) => currentId ? state.books.find((book) => book._id === currentId) : null);
+
+    useEffect(() => {
+        if (book) setBookData(book);
+    }, [book]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(createBook(bookData));
-
-        // clear();
+        if (currentId) {
+            dispatch(updateBook(currentId, bookData));
+        } else {
+            dispatch(createBook(bookData));
+        }
+        clear();
     }
 
     const clear = () => {
+        setCurrentId(null);
         setBookData(initialState);
     }
 
