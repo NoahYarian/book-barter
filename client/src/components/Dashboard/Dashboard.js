@@ -20,14 +20,9 @@ const Dashboard = () => {
             />
         );
     }
-
-    const userData = JSON.stringify(Userfront.user, null, 2);
     
     return (
         <div>
-            <h1>Dashboard</h1>
-            <pre>{userData}</pre>
-            <button onClick={Userfront.logout}>Logout</button>
             <Bookshelf />
             <Wishlist />
             <Matches />
