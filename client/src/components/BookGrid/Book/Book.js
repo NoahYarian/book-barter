@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { deleteBook } from '../../../actions/books';
 
-const Book = ({ book, setCurrentId }) => {
+const Book = ({ book, setCurrentBookId }) => {
     const dispatch = useDispatch();
 
     return (
@@ -16,7 +16,7 @@ const Book = ({ book, setCurrentId }) => {
             <Typography variant="body2">Format: {book.format}</Typography>
             <Typography variant="body2">Condition: {book.condition}</Typography>
             <Typography variant="body2">Details: {book.details}</Typography>
-            <Button size="small" variant="outlined" color="primary" onClick={() => setCurrentId(book._id)}>Edit</Button>
+            <Button size="small" variant="outlined" color="primary" onClick={() => setCurrentBookId(book._id)}>Edit</Button>
             <Button size="small" variant="contained" color="error" onClick={() => dispatch(deleteBook(book._id))}>Delete</Button>
         </Card>
     );

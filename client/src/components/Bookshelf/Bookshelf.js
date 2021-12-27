@@ -5,8 +5,8 @@ import { getBooks } from '../../actions/books';
 import BookGrid from '../BookGrid/BookGrid';
 import AddBookForm from '../AddBookForm/AddBookForm';
 
-const BookCollection = () => {
-    const [currentId, setCurrentId] = useState(null);
+const Bookshelf = () => {
+    const [currentBookId, setCurrentBookId] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -15,11 +15,11 @@ const BookCollection = () => {
 
     return (
         <div>
-            <h1>BookCollection</h1>
-            <BookGrid setCurrentId={setCurrentId} />
-            <AddBookForm currentId={currentId} setCurrentId={setCurrentId} />
+            <h1>Bookshelf</h1>
+            <BookGrid setCurrentBookId={setCurrentBookId} />
+            <AddBookForm currentBookId={currentBookId} setCurrentBookId={setCurrentBookId} />
         </div>
     );
 }
 
-export default BookCollection;
+export default Bookshelf;

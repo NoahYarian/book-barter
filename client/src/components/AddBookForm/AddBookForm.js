@@ -5,13 +5,13 @@ import Userfront from '@userfront/react';
 
 import { createBook, updateBook } from '../../actions/books';
 
-const AddBookForm = ({ currentId, setCurrentId }) => {
+const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     const dispatch = useDispatch();
 
     const initialState = { title: '', author: '', isbn: '', year: '', format: '', condition: '', details: '' };
     const [bookData, setBookData] = useState(initialState);
 
-    const book = useSelector((state) => currentId ? state.books.find((book) => book._id === currentId) : null);
+    const book = useSelector((state) => currentBookId ? state.books.find((book) => book._id === currentBookId) : null);
 
     const userId = Userfront.user?.userUuid;
 
@@ -24,8 +24,8 @@ const AddBookForm = ({ currentId, setCurrentId }) => {
 
         const bookDataWithUserId = { ...bookData, userId };
 
-        if (currentId) {
-            dispatch(updateBook(currentId, bookDataWithUserId));
+        if (currentBookId) {
+            dispatch(updateBook(currentBookId, bookDataWithUserId));
         } else {
             dispatch(createBook(bookDataWithUserId));
         }
@@ -33,7 +33,7 @@ const AddBookForm = ({ currentId, setCurrentId }) => {
     }
 
     const clear = () => {
-        setCurrentId(null);
+        setCurrentBookId(null);
         setBookData(initialState);
     }
 
