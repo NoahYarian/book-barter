@@ -37,6 +37,17 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
         setBookData(initialState);
     }
 
+    const bookLookupFromISBN = async () => {
+        const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${bookData.isbn}&format=json&jscmd=data`);
+        const data = await response.json();
+        setBookData(prev => ({
+            ...prev,
+            title: data[`ISBN:${bookData.isbn}`].title,
+            author: data[`ISBN:${bookData.isbn}`].authors[0].name,
+            year: data[`ISBN:${bookData.isbn}`].publish_date
+        }));
+    }
+
     return (
         <Paper>
             <form onSubmit={handleSubmit}>
@@ -47,6 +58,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                 <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} />
                 <TextField name="year" variant="outlined" label="Year" value={bookData.year} onChange={(e) => setBookData({ ...bookData, year: e.target.value })} />
                 <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} />
+                <Button variant="outlined" color="secondary" size="small" onClick={bookLookupFromISBN}>Look Up</Button>
                 <TextField name="format" variant="outlined" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })} />
                 <TextField name="condition" variant="outlined" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })} />
                 <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} />
