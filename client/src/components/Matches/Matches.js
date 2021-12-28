@@ -8,7 +8,6 @@ const Matches = () => {
     const dispatch = useDispatch();
 
     const handleClick = () => {
-        console.log('hello');
         dispatch(getMatches());
     }
 

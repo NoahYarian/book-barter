@@ -6,52 +6,51 @@ export const getMatches = async (req, res) => {
     try {
         const books = await Book.find();
         const wishes = await Wish.find();
-        const myBooks = books.filter((book) => book.userId === req.userId);
-        const myWishes = wishes.filter((wish) => wish.userId === req.userId);
-        const otherBooks = books.filter((book) => book.userId !== req.userId);
 
-        let foundBooks = [];
-        for (let i = 0, wish; i < myWishes.length; i++) {
-            wish = myWishes[i];
-            foundBooks.push(...otherBooks.filter((book) => (book.title === wish.title && book.author === wish.author) ||
-                                                           (wish.title === '' && book.author === wish.author)));
+        const myBooks = getItemsForUser(books, req.userId);
+        const myWishes = getItemsForUser(wishes, req.userId);
+
+        const communityBooks = books.filter((book) => book.userId !== req.userId);
+        const communityBooksIWant = getBooksMatchingWishes(communityBooks, myWishes);
+
+        let matches = {};
+        for (let i = 0; i < communityBooksIWant.length; i++) {
+
+            const theirId = communityBooksIWant[i].userId;
+
+            if (matches[theirId]) continue;
+
+            const theirWishes = getItemsForUser(wishes, theirId);
+            const theirBooks = getItemsForUser(books, theirId);
+
+            const booksOfMineTheyWant = getBooksMatchingWishes(myBooks, theirWishes);
+            const booksOfTheirsIWant = getBooksMatchingWishes(theirBooks, myWishes);
+
+            if (booksOfMineTheyWant.length > 0) matches[theirId] = { booksOfMineTheyWant, booksOfTheirsIWant };
         }
 
-        let matches = [];
-        for (let i = 0, theirUserId, theirWishes; i < foundBooks.length; i++) {
-            theirUserId = foundBooks[i].userId;
-            theirWishes = wishes.filter((wish) => wish.userId === theirUserId);
-
-            for (let j = 0, wish, myBooksThatTheyWant; j < theirWishes.length; j++) {
-                wish = theirWishes[j]
-                myBooksThatTheyWant = myBooks.filter((book) => (book.title === wish.title && book.author === wish.author) ||
-                                                               (wish.title === '' && book.author === wish.author));
-                if (myBooksThatTheyWant.length > 0) {
-                    matches.push({ userId: theirUserId, myBooksThatTheyWant });
-                }
-            }
-        }
-
-        let finalMatches = {};
-        for (let i = 0, theirUserId, theirBooks, theirBooksThatIWant = []; i < matches.length; i++) {
-            if (finalMatches[theirUserId]) continue;
-            theirUserId = matches[i].userId;
-            theirBooks = otherBooks.filter((book) => book.userId === theirUserId);
-
-            for (let j = 0, wish; j < myWishes.length; j++) {
-                wish = myWishes[j];
-                theirBooksThatIWant.push(...theirBooks.filter((book) => (book.title === wish.title && book.author === wish.author) ||
-                                                                  (wish.title === '' && book.author === wish.author)));
-            }
-            finalMatches[theirUserId] = {
-                myBooksThatTheyWant: matches[i].myBooksThatTheyWant,
-                theirBooksThatIWant
-            }
-        }
-
-        res.status(200).json(finalMatches);
+        res.status(200).json(matches);
     } catch (error) {
         res.status(404).json({ messsage: error.message });
     }
 }
 
+const getBooksMatchingWishes = (books, wishes) => {
+    let foundBooks = [];
+    for (let i = 0, wish; i < wishes.length; i++) {
+        wish = wishes[i];
+        foundBooks.push(...books.filter((book) => isMatchingBookOrAuthor(book, wish)));
+    }
+    return foundBooks;
+}
+
+const isMatchingBookOrAuthor = (book, wish) => {
+    return ((book.title === wish.title &&
+            book.author === wish.author)
+        || (wish.title === '' &&
+            book.author === wish.author));
+}
+
+const getItemsForUser = (items, userId) => {
+    return items.filter((item) => item.userId === userId);
+}
