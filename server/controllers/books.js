@@ -3,7 +3,7 @@ import Book from '../models/book.js';
 
 export const getBooks = async (req, res) => {
     try {
-        const books = await Book.find();
+        const books = await Book.find({ userId: req.userId});
 
         res.status(200).json(books);
     } catch (error) {

@@ -3,7 +3,7 @@ import Wish from '../models/wish.js';
 
 export const getWishes = async (req, res) => {
     try {
-        const wishes = await Wish.find();
+        const wishes = await Wish.find({ userId: req.userId});
 
         res.status(200).json(wishes);
     } catch (error) {
