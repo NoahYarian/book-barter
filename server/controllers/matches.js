@@ -35,22 +35,21 @@ export const getMatches = async (req, res) => {
     }
 }
 
-const getBooksMatchingWishes = (books, wishes) => {
+export const getBooksMatchingWishes = (books, wishes) => {
     let foundBooks = [];
-    for (let i = 0, wish; i < wishes.length; i++) {
-        wish = wishes[i];
-        foundBooks.push(...books.filter((book) => isMatchingBookOrAuthor(book, wish)));
+    for (let i = 0; i < wishes.length; i++) {
+        foundBooks.push(...books.filter((book) => isMatchingBookOrAuthor(book, wishes[i])));
     }
     return foundBooks;
 }
 
-const isMatchingBookOrAuthor = (book, wish) => {
+export const isMatchingBookOrAuthor = (book, wish) => {
     return ((book.title === wish.title &&
             book.author === wish.author)
         || (wish.title === '' &&
             book.author === wish.author));
 }
 
-const getItemsForUser = (items, userId) => {
+export const getItemsForUser = (items, userId) => {
     return items.filter((item) => item.userId === userId);
 }
