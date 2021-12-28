@@ -1,8 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Button } from '@mui/material';
+
+import { getMatches } from '../../actions/matches';
 
 const Matches = () => {
+    const dispatch = useDispatch();
+
+    const handleClick = () => {
+        console.log('hello');
+        dispatch(getMatches());
+    }
+
     return (
-        <h1>Matches</h1>
+        <Button onClick={handleClick}>Get Matches</Button>
     );
 }
 

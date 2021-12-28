@@ -7,3 +7,4 @@ export const GET_WISHES = 'GET_WISHES';
 export const CREATE_WISH = 'CREATE_WISH';
 export const DELETE_WISH = 'DELETE_WISH';
 export const UPDATE_WISH = 'UPDATE_WISH';
+export const GET_MATCHES = 'GET_MATCHES';
