@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { getItemsForUser, isMatchingBookOrAuthor } from './matches.js';
+import { getBooksMatchingWishes, getItemsForUser, isMatchingBookOrAuthor } from './matches.js';
 
 
 const ObjectId = mongoose.Types.ObjectId;
@@ -430,6 +430,38 @@ const test2Wishes = [
       __v: 0
     }
 ];
+
+describe('getBooksMatchingWishes', () => {
+    test('returns matching books', () => {
+        const foundBooks = [
+            {
+                _id: new ObjectId("61ca7cfecfaf8385e2742fe0"),
+                title: 'Book6',
+                author: 'Author4',
+                isbn: '',
+                year: '',
+                format: 'lij',
+                condition: 'lij',
+                details: '',
+                userId: '3b4a99cd-c106-4390-95ec-d2fc8a37869d',
+                __v: 0
+            },
+            {
+                _id: new ObjectId("61ca7cc9cfaf8385e2742fdd"),
+                title: 'Book7',
+                author: 'Author5',
+                isbn: '',
+                year: '',
+                format: 'lkj',
+                condition: 'lkj',
+                details: '',
+                userId: '3b4a99cd-c106-4390-95ec-d2fc8a37869d',
+                __v: 0
+            }
+        ];
+        expect(getBooksMatchingWishes(books, memberWishes)).toEqual(foundBooks);
+    });
+});
 
 describe('isMatchingBookOrAuthor', () => {
     test('returns true with matching title and author', () => {
