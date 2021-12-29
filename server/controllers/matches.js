@@ -13,12 +13,13 @@ export const getMatches = async (req, res) => {
         const communityBooks = books.filter((book) => book.userId !== req.userId);
         const communityBooksIWant = getBooksMatchingWishes(communityBooks, myWishes);
 
-        let matches = {};
+        let matchesLog = [];
+        let matches = [];
         for (let i = 0; i < communityBooksIWant.length; i++) {
 
             const theirId = communityBooksIWant[i].userId;
 
-            if (matches[theirId]) continue;
+            if (matchesLog.indexOf(theirId) !== -1) continue;
 
             const theirWishes = getItemsForUser(wishes, theirId);
             const theirBooks = getItemsForUser(books, theirId);
@@ -26,7 +27,10 @@ export const getMatches = async (req, res) => {
             const booksOfMineTheyWant = getBooksMatchingWishes(myBooks, theirWishes);
             const booksOfTheirsIWant = getBooksMatchingWishes(theirBooks, myWishes);
 
-            if (booksOfMineTheyWant.length > 0) matches[theirId] = { booksOfMineTheyWant, booksOfTheirsIWant };
+            if (booksOfMineTheyWant.length > 0) {
+                matchesLog.push(theirId);
+                matches.push({ theirId, booksOfMineTheyWant, booksOfTheirsIWant });
+            }
         }
 
         res.status(200).json(matches);
