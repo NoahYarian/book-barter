@@ -24,6 +24,7 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    imageURL: String,
 });
 
 export default mongoose.model('Book', bookSchema);

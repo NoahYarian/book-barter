@@ -8,7 +8,7 @@ import { createBook, updateBook } from '../../actions/books';
 const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     const dispatch = useDispatch();
 
-    const initialState = { title: '', author: '', isbn: '', year: '', format: '', condition: '', details: '' };
+    const initialState = { title: '', author: '', isbn: '', year: '', format: '', condition: '', details: '', imageURL: '' };
     const [bookData, setBookData] = useState(initialState);
 
     const book = useSelector((state) => currentBookId ? state.books.find((book) => book._id === currentBookId) : null);
@@ -44,7 +44,8 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             ...prev,
             title: data[`ISBN:${bookData.isbn}`].title,
             author: data[`ISBN:${bookData.isbn}`].authors[0].name,
-            year: data[`ISBN:${bookData.isbn}`].publish_date
+            year: data[`ISBN:${bookData.isbn}`].publish_date,
+            imageURL: `https://covers.openlibrary.org/b/isbn/${bookData.isbn}-M.jpg`
         }));
     }
 
@@ -62,6 +63,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                 <TextField name="format" variant="outlined" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })} />
                 <TextField name="condition" variant="outlined" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })} />
                 <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} />
+                { bookData.imageURL ? <img src={bookData.imageURL} alt="book cover" /> : <div><span>no image</span></div> }
                 <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
                 <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
             </form>
