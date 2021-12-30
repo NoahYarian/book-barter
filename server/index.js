@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { Server } from 'socket.io';
+import { createServer } from 'http';
 
 import bookRoutes from './routes/books.js';
 import wishRoutes from './routes/wishes.js';
@@ -23,8 +25,19 @@ app.get('/', (req, res) => {
     res.send("Welcome to the API!");
 });
 
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
+io.on('connection', (socket) => {
+    console.log('connected');
+    socket.on('testChat', (message) => {
+        console.log(message);
+        socket.emit('testChat', { line: 'I hear ya!', time: new Date().toISOString() });
+    });
+});
+
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.CONNECTION_URL)
-    .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
+    .then(() => httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
     .catch((error) => console.log(error));
