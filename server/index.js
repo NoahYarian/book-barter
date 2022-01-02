@@ -30,16 +30,31 @@ app.get('/', (req, res) => {
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-io.on('connection', (socket) => {
-    console.log('connected');
-    socket.on('testChat', (message) => {
-        console.log(message);
-        socket.emit('testChat', { line: 'I hear ya!', time: new Date().toISOString() });
-    });
-});
-
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.CONNECTION_URL)
     .then(() => httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
     .catch((error) => console.log(error));
+
+let loggedInUsers = [];
+
+io.on('connection', (socket) => {
+    socket.on('atDashboard', (userId) => {
+        if (!userId) return;
+
+        if (loggedInUsers.findIndex((user) => user.userId === userId) === -1) loggedInUsers.push({ userId, socketId: socket.id });
+
+        console.log(`[atDashboard] loggedInUsers: ${JSON.stringify(loggedInUsers)}`);
+    });
+
+    socket.on("disconnect", (reason) => {
+        const indexOfSocket = loggedInUsers.findIndex((user) => user.socketId === socket.id);
+        if (indexOfSocket === -1) return;
+
+        let newLoggedInUsersArr = loggedInUsers.slice();
+        newLoggedInUsersArr.splice(indexOfSocket, 1);
+        loggedInUsers = newLoggedInUsersArr;
+
+        console.log(`[disconnect] loggedInUsers: ${JSON.stringify(loggedInUsers)}`);
+      });
+});

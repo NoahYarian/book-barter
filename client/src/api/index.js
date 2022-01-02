@@ -1,7 +1,10 @@
 import axios from 'axios';
 import Userfront from '@userfront/react';
+import { io } from 'socket.io-client';
 
 const API = axios.create();
+
+export const socket = io('ws://localhost:5000', {transports: ['websocket']});
 
 API.interceptors.request.use((req) => {
     if(Userfront.tokens?.accessToken) {
