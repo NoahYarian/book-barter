@@ -8,3 +8,5 @@ export const CREATE_WISH = 'CREATE_WISH';
 export const DELETE_WISH = 'DELETE_WISH';
 export const UPDATE_WISH = 'UPDATE_WISH';
 export const GET_MATCHES = 'GET_MATCHES';
+export const GET_MESSAGES = 'GET_MESSAGES';
+export const CREATE_MESSAGE = 'CREATE_MESSAGE';

@@ -9,6 +9,7 @@ import { createServer } from 'http';
 import bookRoutes from './routes/books.js';
 import wishRoutes from './routes/wishes.js';
 import matchRoutes from './routes/matches.js';
+import messageRoutes from './routes/messages.js';
 
 const app = express();
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(cors());
 app.use('/books', bookRoutes);
 app.use('/wishes', wishRoutes);
 app.use('/matches', matchRoutes);
+app.use('/messages', messageRoutes);
 
 app.get('/', (req, res) => {
     res.send("Welcome to the API!");

@@ -1,40 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Card, Typography, Button, TextField } from '@mui/material';
-import { io } from 'socket.io-client';
+
+import { createMessage } from '../../../actions/messages';
 
 const Match = ({ match }) => {
+    const dispatch = useDispatch();
+
     const [isChatting, setIsChatting] = useState(false);
     const [chat, setChat] = useState({
         conversation: [],
         textField: ''
     });
 
-    const [socket] = useState(() => io('ws://localhost:5000', {transports: ['websocket']}));
-
-    useEffect(() => {
-        socket.on('testChat', (message) => {
-            console.log(message);
-            setChat((prev) => {
-                let newConvo = prev.conversation.slice();
-                newConvo.push(message);
-                return { ...prev, conversation: newConvo };
-            });
-        });
-        return () => {
-            socket.off('testChat');
-        }
-    });
-
     const handleSubmit = (e) => {
         e.preventDefault();
         let newConvo = chat.conversation.slice();
-        let message = { line: chat.textField, time: new Date().toISOString() };
+        let message = {
+            from: match.myId,
+            to: match.theirId,
+            text: chat.textField,
+            time: new Date().toISOString()
+         };
         newConvo.push(message);
         setChat({
             conversation: newConvo,
             textField: ''
         });
-        socket.emit('testChat', message);
+        dispatch(createMessage(message));
     }
 
      return (
@@ -59,7 +52,7 @@ const Match = ({ match }) => {
                 <Card>
                     {chat.conversation.map((message) => {
                         return (
-                            <Typography variant="body2" key={message.time}>You: {message.line}</Typography>
+                            <Typography variant="body2" key={message.time}>{message.from.substring(0,10)} - {message.time} - {message.text}</Typography>
                         );
                     })}
                     <form onSubmit={handleSubmit}>

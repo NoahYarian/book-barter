@@ -7,10 +7,12 @@ export const getMatches = async (req, res) => {
         const books = await Book.find();
         const wishes = await Wish.find();
 
-        const myBooks = getItemsForUser(books, req.userId);
-        const myWishes = getItemsForUser(wishes, req.userId);
+        const myId = req.userId;
 
-        const communityBooks = books.filter((book) => book.userId !== req.userId);
+        const myBooks = getItemsForUser(books, myId);
+        const myWishes = getItemsForUser(wishes, myId);
+
+        const communityBooks = books.filter((book) => book.userId !== myId);
         const communityBooksIWant = getBooksMatchingWishes(communityBooks, myWishes);
 
         let matchesLog = [];
@@ -29,7 +31,7 @@ export const getMatches = async (req, res) => {
 
             if (booksOfMineTheyWant.length > 0) {
                 matchesLog.push(theirId);
-                matches.push({ theirId, booksOfMineTheyWant, booksOfTheirsIWant });
+                matches.push({ myId, theirId, booksOfMineTheyWant, booksOfTheirsIWant });
             }
         }
 

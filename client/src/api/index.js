@@ -21,3 +21,6 @@ export const deleteWish = (id) => API.delete(`/wishes/${id}`);
 export const updateWish = (id, updatedWish) => API.patch(`/wishes/${id}`, updatedWish);
 
 export const getMatches = () => API.get('/matches');
+
+export const getMessages = () => API.get('/messages');
+export const createMessage = (newMessage) => API.post('/messages', newMessage);
