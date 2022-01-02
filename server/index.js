@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 
+import userRoutes from './routes/user.js';
 import bookRoutes from './routes/books.js';
 import wishRoutes from './routes/wishes.js';
 import matchRoutes from './routes/matches.js';
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use('/user', userRoutes);
 app.use('/books', bookRoutes);
 app.use('/wishes', wishRoutes);
 app.use('/matches', matchRoutes);

@@ -13,6 +13,10 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
+export const getUser = () => API.get('/user');
+export const createUser = (newUser) => API.post('/user', newUser);
+export const updateUser = (updatedUser) => API.patch('/user', updatedUser);
+
 export const getBooks = () => API.get('/books');
 export const createBook = (newBook) => API.post('/books', newBook);
 export const deleteBook = (id) => API.delete(`/books/${id}`);
