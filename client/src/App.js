@@ -9,6 +9,7 @@ import Login from "./components/Login/Login";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Welcome from "./components/Welcome/Welcome";
 import Dashboard from "./components/Dashboard/Dashboard";
+import Profile from "./components/Profile/Profile";
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
                     <Route path="/forgot" element={<ForgotPassword />} />
                     <Route path="/welcome" element={<Welcome />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/profile" element={<Profile />} />
                 </Routes>
             </Container>
         </BrowserRouter>
