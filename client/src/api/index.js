@@ -13,8 +13,8 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
+export const userLoggedIn = (user) => API.post('/user', user);
 export const getUser = () => API.get('/user');
-export const createUser = (newUser) => API.post('/user', newUser);
 export const updateUser = (updatedUser) => API.patch('/user', updatedUser);
 
 export const getBooks = () => API.get('/books');

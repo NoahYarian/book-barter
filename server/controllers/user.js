@@ -1,8 +1,28 @@
 import User from '../models/user.js';
 
-export const getUser = async (req, res) => {
+export const userLoggedIn = async (req, res) => {
     try {
         const user = await User.find({ userId: req.userId });
+
+        if (user.length === 0) {
+            const newUser = new User({
+                userId: req.body.userUuid,
+                username: req.body.username,
+                name: req.body.name,
+                email: req.body.email,
+                imageURL: req.body.image,
+                dateCreated: new Date().toISOString(),
+                lastLogin: new Date().toISOString(),
+            });
+
+            try {
+                await newUser.save();
+
+                return res.status(201).json(newUser);
+            } catch (error) {
+                return res.status(409).json({ message: error.message });
+            }
+        }
 
         res.status(200).json(user);
     } catch (error) {
@@ -10,17 +30,13 @@ export const getUser = async (req, res) => {
     }
 }
 
-export const createUser = async (req, res) => {
-    const user = req.body;
-
-    const newUser = new User(user);
-
+export const getUser = async (req, res) => {
     try {
-        await newUser.save();
+        const user = await User.find({ userId: req.userId });
 
-        res.status(201).json(newUser);
+        res.status(200).json(user);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(404).json({ messsage: error.message });
     }
 }
 

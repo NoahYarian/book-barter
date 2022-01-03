@@ -1,5 +1,5 @@
+export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 export const GET_USER = 'GET_USER';
-export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 
 export const GET_BOOKS = 'GET_BOOKS';

@@ -1,8 +1,8 @@
-import { GET_USER, CREATE_USER, UPDATE_USER } from '../constants/actionTypes';
+import { USER_LOGGED_IN, GET_USER, UPDATE_USER } from '../constants/actionTypes';
 
 const userReducer = (user = {}, action) => {
     switch (action.type) {
-        case CREATE_USER:
+        case USER_LOGGED_IN:
         case GET_USER:
         case UPDATE_USER:
             return action.payload;

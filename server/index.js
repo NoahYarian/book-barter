@@ -41,12 +41,12 @@ mongoose.connect(process.env.CONNECTION_URL)
 let loggedInUsers = [];
 
 io.on('connection', (socket) => {
-    socket.on('atDashboard', (userId) => {
+    socket.on('authenticated', (userId) => {
         if (!userId) return;
 
         if (loggedInUsers.findIndex((user) => user.userId === userId) === -1) loggedInUsers.push({ userId, socketId: socket.id });
 
-        console.log(`[atDashboard] loggedInUsers: ${JSON.stringify(loggedInUsers)}`);
+        console.log(`[authenticated] loggedInUsers: ${JSON.stringify(loggedInUsers)}`);
     });
 
     socket.on("disconnect", (reason) => {

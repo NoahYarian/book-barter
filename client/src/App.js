@@ -7,6 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import Welcome from "./components/Welcome/Welcome";
 import Dashboard from "./components/Dashboard/Dashboard";
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/forgot" element={<ForgotPassword />} />
+                    <Route path="/welcome" element={<Welcome />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                 </Routes>
             </Container>
