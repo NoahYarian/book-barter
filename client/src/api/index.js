@@ -31,3 +31,5 @@ export const getMatches = () => API.get('/matches');
 
 export const getMessages = () => API.get('/messages');
 export const createMessage = (newMessage) => API.post('/messages', newMessage);
+
+export const consoleLog = (data) => API.post('/debug', data);
