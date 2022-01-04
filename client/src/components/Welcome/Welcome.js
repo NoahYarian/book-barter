@@ -14,9 +14,7 @@ const Welcome = () => {
     if (Userfront.accessToken()) {
         socket.emit('authenticated', Userfront.user.userUuid);
         dispatch(userLoggedIn(Userfront.user));
-    }
-
-    if (!Userfront.accessToken()) {
+    } else {
         return (
             <Navigate
                 to={{
