@@ -18,13 +18,13 @@ export const userLoggedIn = async (req, res) => {
             try {
                 await newUser.save();
 
-                return res.status(201).json(newUser);
+                return res.status(201).json(newUser[0]);
             } catch (error) {
                 return res.status(409).json({ message: error.message });
             }
         }
 
-        res.status(200).json(user);
+        res.status(200).json(user[0]);
     } catch (error) {
         res.status(404).json({ messsage: error.message });
     }

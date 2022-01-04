@@ -11,7 +11,7 @@ const Profile = () => {
     const location = useLocation();
     const dispatch = useDispatch();
 
-    const user = useSelector((state) => state.user[0]);
+    const user = useSelector((state) => state.user);
 
     const [userData, setUserData] = useState(user);
 
