@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Card, Typography, Button, TextField } from '@mui/material';
 
 import { createMessage } from '../../../actions/messages';
+import { updateMatchWithSentMessage } from '../../../actions/matches';
 
 const Match = ({ match }) => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Match = ({ match }) => {
          };
         setTextField('');
         dispatch(createMessage(message));
+        dispatch(updateMatchWithSentMessage(match.theirUser.userId, message));
     }
 
      return (
