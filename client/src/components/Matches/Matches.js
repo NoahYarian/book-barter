@@ -18,7 +18,7 @@ const Matches = () => {
             <Button onClick={handleClick}>Get Matches</Button>
             <Grid container>
                 {matches.map((match) => (
-                    <Grid item key={match.theirId}>
+                    <Grid item key={match.theirUser.userId}>
                         <Match match={match} />
                     </Grid>
                 ))}

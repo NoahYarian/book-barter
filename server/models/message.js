@@ -1,22 +1,11 @@
 import mongoose from 'mongoose';
+import { userSchema } from './user.js';
 
 const messageSchema = new mongoose.Schema({
-    from: { 
-        type: String,
-        required: true
-    },
-    to: { 
-        type: String,
-        required: true
-    },
-    text: {
-        type: String,
-        required: true
-    },
-    time: {
-        type: Date,
-        required: true
-    },
+    from: userSchema,
+    to: userSchema,
+    text: String,
+    time: Date,
 });
 
 export default mongoose.model('Message', messageSchema);

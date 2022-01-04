@@ -2,14 +2,16 @@ import mongoose from 'mongoose';
 import Book from '../models/book.js';
 import Wish from '../models/wish.js';
 import Message from '../models/message.js';
+import User from '../models/user.js';
 
 export const getMatches = async (req, res) => {
     try {
         const myId = req.userId;
 
+        const myUser = (await User.find({ userId: myId }))[0];
         const books = await Book.find();
         const wishes = await Wish.find();
-        const messages = await Message.find({ $or: [{ from: myId }, { to: myId }] });
+        const messages = await Message.find({ $or: [{ 'from.userId': myId }, { 'to.userId': myId }] });
 
         const myBooks = getItemsForUser(books, myId);
         const myWishes = getItemsForUser(wishes, myId);
@@ -33,9 +35,13 @@ export const getMatches = async (req, res) => {
 
             if (booksOfMineTheyWant.length > 0) {
                 matchesLog.push(theirId);
-                const conversation = messages.filter((message) => message.to === theirId || message.from === theirId);
+
+                const conversation = messages.filter((message) => message.to.userId === theirId || message.from.userId === theirId);
                 conversation.sort((m1, m2) => m1.time - m2.time);
-                matches.push({ myId, theirId, booksOfMineTheyWant, booksOfTheirsIWant, conversation });
+
+                const theirUser = (await User.find({ userId: theirId }))[0];
+
+                matches.push({ myUser, theirUser, booksOfMineTheyWant, booksOfTheirsIWant, conversation });
             }
         }
 

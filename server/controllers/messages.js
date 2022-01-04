@@ -2,7 +2,7 @@ import Message from '../models/message.js';
 
 export const getMessages = async (req, res) => {
     try {
-        const messages = await Message.find({ $or: [{ from: req.userId }, { to: req.userId }] });
+        const messages = await Message.find({ $or: [{ 'from.userId': req.userId }, { 'to.userId': req.userId }] });
 
         res.status(200).json(messages);
     } catch (error) {

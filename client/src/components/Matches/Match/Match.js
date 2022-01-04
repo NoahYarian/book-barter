@@ -13,8 +13,8 @@ const Match = ({ match }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let message = {
-            from: match.myId,
-            to: match.theirId,
+            from: match.myUser,
+            to: match.theirUser,
             text: textField,
             time: new Date()
          };
@@ -25,7 +25,7 @@ const Match = ({ match }) => {
      return (
          <div>
             <Card>
-                <Typography variant="h5">{match.theirId}</Typography>
+                <Typography variant="h5">{match.theirUser.name}</Typography>
                 <Typography variant="body2">Books of theirs I want:</Typography>
                 <ul>
                     { match.booksOfTheirsIWant.map((book) => (
@@ -44,7 +44,10 @@ const Match = ({ match }) => {
                 <Card>
                     {match.conversation.map((message) => {
                         return (
-                            <Typography variant="body2" key={message.time}>{message.from.substring(0,10)} - {message.time} - {message.text}</Typography>
+                            <div style={{ display: 'flex' }} key={message.time}>
+                                <img src={message.from.imageURL} alt="avatar" style={{ width: "30px" }} />
+                                <Typography variant="body2">{message.from.name} - {message.time} - {message.text}</Typography>
+                            </div>
                         );
                     })}
                     <form onSubmit={handleSubmit}>
