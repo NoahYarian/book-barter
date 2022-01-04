@@ -8,25 +8,17 @@ const Match = ({ match }) => {
     const dispatch = useDispatch();
 
     const [isChatting, setIsChatting] = useState(false);
-    const [chat, setChat] = useState({
-        conversation: [],
-        textField: ''
-    });
+    const [textField, setTextField] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let newConvo = chat.conversation.slice();
         let message = {
             from: match.myId,
             to: match.theirId,
-            text: chat.textField,
-            time: new Date().toISOString()
+            text: textField,
+            time: new Date()
          };
-        newConvo.push(message);
-        setChat({
-            conversation: newConvo,
-            textField: ''
-        });
+        setTextField('');
         dispatch(createMessage(message));
     }
 
@@ -50,13 +42,13 @@ const Match = ({ match }) => {
             </Card>
             { isChatting &&
                 <Card>
-                    {chat.conversation.map((message) => {
+                    {match.conversation.map((message) => {
                         return (
                             <Typography variant="body2" key={message.time}>{message.from.substring(0,10)} - {message.time} - {message.text}</Typography>
                         );
                     })}
                     <form onSubmit={handleSubmit}>
-                        <TextField name="chat" variant="outlined" label="Type a message" value={chat.textField} onChange={(e) => setChat({ ...chat, textField: e.target.value })} />
+                        <TextField name="chat" variant="outlined" label="Type a message" value={textField} onChange={(e) => setTextField(e.target.value)} />
                         <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Send</Button>
                     </form>
                 </Card>
