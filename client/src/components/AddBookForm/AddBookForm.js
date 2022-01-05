@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Typography, TextField, Button, Backdrop } from '@mui/material';
+import { Paper, Typography, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel } from '@mui/material';
 
 import { createBook, updateBook } from '../../actions/books';
 import Scanner from '../Scanner/Scanner';
@@ -71,10 +71,31 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                     <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen}  bookLookupFromISBN={bookLookupFromISBN} />
                 </Backdrop>
 
-                <TextField name="format" variant="outlined" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })} />
-                <TextField name="condition" variant="outlined" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })} />
-                <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} />
-                { bookData.imageURL ? <img src={bookData.imageURL} alt="book cover" /> : <div><span>no image</span></div> }
+                <FormControl sx={{ minWidth: 225}}>
+                    <InputLabel id="format-select-label">Format</InputLabel>
+                    <Select labelId="format-select-label" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })}>
+                        <MenuItem value="hardcover">Hardcover</MenuItem>
+                        <MenuItem value="tradePaperback">Trade Paperback</MenuItem>
+                        <MenuItem value="massMarketPaperback">Mass Market Paperback</MenuItem>
+                    </Select>
+                </FormControl>
+
+                <FormControl sx={{ minWidth: 125 }}>
+                    <InputLabel id="condition-select-label">Condition</InputLabel>
+                    <Select labelId="condition-select-label" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })}>
+                        <MenuItem value="AsNew">As New</MenuItem>
+                        <MenuItem value="fine">Fine</MenuItem>
+                        <MenuItem value="veryGood">Very Good</MenuItem>
+                        <MenuItem value="good">Good</MenuItem>
+                        <MenuItem value="fair">Fair</MenuItem>
+                        <MenuItem value="poor">Poor</MenuItem>
+                    </Select>
+                </FormControl>
+
+                <TextField sx={{ minWidth: 475 }} name="imageURL" variant="outlined" label="Cover Image URL" value={bookData.imageURL} onChange={(e) => setBookData({ ...bookData, imageURL: e.target.value })} />
+                <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} fullWidth />
+                {bookData.imageURL && <img src={bookData.imageURL} alt="book cover" />}
+
                 <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
                 <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
             </form>
