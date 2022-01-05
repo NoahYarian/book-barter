@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Typography, TextField, Button } from '@mui/material';
+import { Paper, Typography, TextField, Button, Backdrop } from '@mui/material';
 
 import { createBook, updateBook } from '../../actions/books';
+import Scanner from '../Scanner/Scanner';
 
 const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     const dispatch = useDispatch();
@@ -13,6 +14,9 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     const book = useSelector((state) => currentBookId ? state.books.find((book) => book._id === currentBookId) : null);
     const userId = useSelector((state) => state.user.userId);
 
+    const [backdropIsOpen, setBackdropIsOpen] = useState(false);
+    const handleCloseScanner = () => setBackdropIsOpen(false);
+    const handleToggleScanner = () => setBackdropIsOpen(!backdropIsOpen);
 
     useEffect(() => {
         if (book) setBookData(book);
@@ -36,15 +40,16 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
         setBookData(initialState);
     }
 
-    const bookLookupFromISBN = async () => {
-        const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${bookData.isbn}&format=json&jscmd=data`);
+    const bookLookupFromISBN = async (isbn) => {
+        const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
         const data = await response.json();
         setBookData(prev => ({
             ...prev,
-            title: data[`ISBN:${bookData.isbn}`].title,
-            author: data[`ISBN:${bookData.isbn}`].authors[0].name,
-            year: data[`ISBN:${bookData.isbn}`].publish_date,
-            imageURL: `https://covers.openlibrary.org/b/isbn/${bookData.isbn}-M.jpg`
+            isbn,
+            title: data[`ISBN:${isbn}`].title,
+            author: data[`ISBN:${isbn}`].authors[0].name,
+            year: data[`ISBN:${isbn}`].publish_date,
+            imageURL: `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`
         }));
     }
 
@@ -58,7 +63,14 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                 <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} />
                 <TextField name="year" variant="outlined" label="Year" value={bookData.year} onChange={(e) => setBookData({ ...bookData, year: e.target.value })} />
                 <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} />
-                <Button variant="outlined" color="secondary" size="small" onClick={bookLookupFromISBN}>Look Up</Button>
+                <Button variant="outlined" color="secondary" size="small" onClick={() => bookLookupFromISBN(bookData.isbn)}>Look Up</Button>
+
+                <Button onClick={handleToggleScanner}>Scan Barcode</Button>
+                <Backdrop open={backdropIsOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                    <Button variant="outlined" color="secondary" size="small" onClick={handleCloseScanner}>Close Scanner</Button>
+                    <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen}  bookLookupFromISBN={bookLookupFromISBN} />
+                </Backdrop>
+
                 <TextField name="format" variant="outlined" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })} />
                 <TextField name="condition" variant="outlined" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })} />
                 <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} />

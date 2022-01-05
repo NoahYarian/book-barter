@@ -11,14 +11,8 @@ const bookSchema = new mongoose.Schema({
     },
     isbn: String,
     year: String,
-    format: {
-        type: String,
-        required: true
-    },
-    condition: {
-        type: String,
-        required: true
-    },
+    format: String,
+    condition: String,
     details: String,
     userId: {
         type: String,
