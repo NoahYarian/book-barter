@@ -16,7 +16,9 @@ const Scanner = ({ handleCloseScanner, backdropIsOpen, bookLookupFromISBN}) => {
         );
 
         const onScanSuccess = async (decodedText, /*decodedResult*/) => {
-            decodedText = '9781585425860';
+            // decodedText = '9781585425860';
+
+            if (decodedText.length !== 13 || decodedText.slice(0,2) !== "97") return;
 
             bookLookupFromISBN(decodedText);
 
