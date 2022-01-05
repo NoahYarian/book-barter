@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Typography, TextField, Button } from '@mui/material';
-import Userfront from '@userfront/react';
 
 import { createBook, updateBook } from '../../actions/books';
 
@@ -12,8 +11,8 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     const [bookData, setBookData] = useState(initialState);
 
     const book = useSelector((state) => currentBookId ? state.books.find((book) => book._id === currentBookId) : null);
+    const userId = useSelector((state) => state.user.userId);
 
-    const userId = Userfront.user?.userUuid;
 
     useEffect(() => {
         if (book) setBookData(book);

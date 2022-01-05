@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Typography, TextField, Button } from '@mui/material';
-import Userfront from '@userfront/react';
 
 import { createWish, updateWish } from '../../actions/wishes';
 
@@ -12,8 +11,7 @@ const AddWishForm = ({ currentWishId, setCurrentWishId }) => {
     const [wishData, setWishData] = useState(initialState);
 
     const wish = useSelector((state) => currentWishId ? state.wishes.find((wish) => wish._id === currentWishId) : null);
-
-    const userId = Userfront.user?.userUuid;
+    const userId = useSelector((state) => state.user.userId);
 
     useEffect(() => {
         if (wish) setWishData(wish);
