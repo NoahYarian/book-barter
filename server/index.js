@@ -60,5 +60,13 @@ io.on('connection', (socket) => {
         loggedInUsers = newLoggedInUsersArr;
 
         console.log(`[disconnect] loggedInUsers: ${JSON.stringify(loggedInUsers)}`);
-      });
+    });
+
+    socket.on("message", (message) => {
+        const recipientSocketIndex = loggedInUsers.findIndex(user => user.userId === message.to.userId);
+        if ( recipientSocketIndex !== -1) {
+            const recipientSocket = loggedInUsers[recipientSocketIndex].socketId;
+            socket.to(recipientSocket).emit("newMessage", message);
+        }
+    });
 });

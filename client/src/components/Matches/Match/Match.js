@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Card, Typography, Button, TextField } from '@mui/material';
 
 import { createMessage } from '../../../actions/messages';
-import { updateMatchWithSentMessage } from '../../../actions/matches';
+import { updateMatchWithSentMessage, updateMatchWithReceivedMessage } from '../../../actions/matches';
+import { socket } from '../../../api/index';
 
 const Match = ({ match }) => {
     const dispatch = useDispatch();
 
     const [isChatting, setIsChatting] = useState(false);
     const [textField, setTextField] = useState('');
+
+    useEffect(() => {
+        socket.on("newMessage", (message) => {
+            dispatch(updateMatchWithReceivedMessage(message));
+        });
+
+        return () => {
+            socket.off("newMessage");
+        }
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,6 +33,7 @@ const Match = ({ match }) => {
         setTextField('');
         dispatch(createMessage(message));
         dispatch(updateMatchWithSentMessage(match.theirUser.userId, message));
+        socket.emit("message", message);
     }
 
      return (
