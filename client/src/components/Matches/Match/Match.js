@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Card, Typography, Button, TextField } from '@mui/material';
+import { Card, Typography, Button, TextField, List, ListItem } from '@mui/material';
 
 import { createMessage } from '../../../actions/messages';
 import { updateMatchWithSentMessage, updateMatchWithReceivedMessage } from '../../../actions/matches';
@@ -56,14 +56,16 @@ const Match = ({ match }) => {
             </Card>
             { isChatting &&
                 <Card>
-                    {match.conversation.map((message) => {
-                        return (
-                            <div style={{ display: 'flex' }} key={message.time}>
-                                <img src={message.from.imageURL} alt="avatar" style={{ width: "30px" }} />
-                                <Typography variant="body2">{message.from.name} - {message.time} - {message.text}</Typography>
-                            </div>
-                        );
-                    })}
+                    <List sx={{ overflow: "auto", maxHeight: 250}}>
+                        {match.conversation.map((message) => {
+                            return (
+                                <ListItem style={{ display: 'flex' }} key={message.time}>
+                                    <img src={message.from.imageURL} alt="avatar" style={{ width: "30px" }} />
+                                    <Typography variant="body2">{message.from.name} - {message.time} - {message.text}</Typography>
+                                </ListItem>
+                            );
+                        })}
+                    </List>
                     <form onSubmit={handleSubmit}>
                         <TextField name="chat" variant="outlined" label="Type a message" value={textField} onChange={(e) => setTextField(e.target.value)} />
                         <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Send</Button>
