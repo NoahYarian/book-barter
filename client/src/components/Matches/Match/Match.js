@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Card, Typography, Button, TextField, List, ListItem } from '@mui/material';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { createMessage } from '../../../actions/messages';
 import { updateMatchWithSentMessage, updateMatchWithReceivedMessage } from '../../../actions/matches';
 import { socket } from '../../../api/index';
+
+dayjs.extend(relativeTime);
 
 const Match = ({ match }) => {
     const dispatch = useDispatch();
@@ -61,7 +65,7 @@ const Match = ({ match }) => {
                             return (
                                 <ListItem style={{ display: 'flex' }} key={message.time}>
                                     <img src={message.from.imageURL} alt="avatar" style={{ width: "30px" }} />
-                                    <Typography variant="body2">{message.from.name} - {message.time} - {message.text}</Typography>
+                                    <Typography variant="body2">{message.from.name} - {dayjs(message.time).fromNow()} - {message.text}</Typography>
                                 </ListItem>
                             );
                         })}
