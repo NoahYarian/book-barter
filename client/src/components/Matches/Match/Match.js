@@ -26,6 +26,16 @@ const Match = ({ match }) => {
         }
     });
 
+    const messageEndRef = useRef(null);
+
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView();
+    });
+
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView();
+    }, [match.conversation.length]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let message = {
@@ -69,6 +79,7 @@ const Match = ({ match }) => {
                                 </ListItem>
                             );
                         })}
+                        <div ref={messageEndRef}></div>
                     </List>
                     <form onSubmit={handleSubmit}>
                         <TextField name="chat" variant="outlined" label="Type a message" value={textField} onChange={(e) => setTextField(e.target.value)} />
