@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Container } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import Userfront from "@userfront/react";
 
 import Navbar from './components/Navbar/Navbar';
@@ -17,6 +18,7 @@ const App = () => {
 
     return (
         <BrowserRouter>
+            <CssBaseline />
             <Container>
                 <Navbar />
                 <Routes>
