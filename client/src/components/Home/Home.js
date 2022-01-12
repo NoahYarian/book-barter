@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Userfront from "@userfront/react";
 
 import booksImage from '../../images/Stack-of-Books-Clipart.jpg';
@@ -17,7 +18,10 @@ const Home = () => {
                 <img src={booksImage} alt="snazzy stack of books" style={{ width: "500px" }} />
                 {/* <a href="https://www.freevector.com/stack-of-books-clipart-vector-30222">FreeVector.com</a> */}
             </div>
-            <SignupForm />
+            <div>
+                <SignupForm />
+                <p>Already have an account? <Link to="/login">Log in</Link></p>
+            </div>
         </div>
     );
 }

@@ -1,13 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Userfront from "@userfront/react";
 
 const Navbar = () => {
+
+    const location = useLocation();
         
     const LogoutButton = Userfront.build({
       toolId: process.env.REACT_APP_USERFRONT_LOGOUT
     });
     
+    if (["/dashboard", "/profile"].indexOf(location.pathname) === -1) return <></>;
+
     return (
         <nav>
             <ul>
