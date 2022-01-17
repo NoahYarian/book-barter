@@ -1,4 +1,4 @@
-import { USER_LOGGED_IN, GET_USER, UPDATE_USER } from '../constants/actionTypes';
+import { USER_LOGGED_IN, GET_USER, UPDATE_USER, LOG_OUT } from '../constants/actionTypes';
 import * as api from '../api';
 
 export const userLoggedIn = (user) => async (dispatch) => {
@@ -26,6 +26,14 @@ export const updateUser = (user) => async (dispatch) => {
         const { data } = await api.updateUser(user);
 
         dispatch({ type: UPDATE_USER, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const logOut = () => async (dispatch) => {
+    try {
+        dispatch({ type: LOG_OUT });
     } catch (error) {
         console.log(error);
     }

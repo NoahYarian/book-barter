@@ -1,6 +1,7 @@
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const LOG_OUT = 'LOG_OUT';
 
 export const GET_BOOKS = 'GET_BOOKS';
 export const CREATE_BOOK = 'CREATE_BOOK';
