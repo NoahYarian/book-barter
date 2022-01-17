@@ -1,3 +1,5 @@
+import Userfront from '@userfront/react';
+
 import { USER_LOGGED_IN, GET_USER, UPDATE_USER, LOG_OUT } from '../constants/actionTypes';
 import * as api from '../api';
 
@@ -35,6 +37,8 @@ export const updateUser = (user) => async (dispatch) => {
 
 export const logOut = () => async (dispatch) => {
     try {
+        Userfront.logout();
+        api.socket.disconnect();
         dispatch({ type: LOG_OUT });
     } catch (error) {
         console.log(error);

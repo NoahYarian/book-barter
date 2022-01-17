@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Userfront from '@userfront/react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,7 +15,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
 import { logOut } from '../../actions/user';
-import { socket } from '../../api';
 
 const pages = ['Bookshelf', 'Wishlist', 'Matches'];
 const settings = ['Profile', 'Logout'];
@@ -64,8 +62,6 @@ const ResponsiveAppBar = () => {
                 navigate('/profile');
                 break;
             case 'Logout':
-                Userfront.logout();
-                socket.disconnect();
                 dispatch(logOut());
                 navigate('/');
                 break;
