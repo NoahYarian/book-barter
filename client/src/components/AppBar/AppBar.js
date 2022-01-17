@@ -42,7 +42,6 @@ const ResponsiveAppBar = () => {
 
     const handleCloseNavMenu = (linkName) => {
         setAnchorElNav(null);
-        setAnchorElUser(null);
         switch (linkName) {
             case 'Bookshelf':
                 navigate('/bookshelf');
@@ -53,6 +52,14 @@ const ResponsiveAppBar = () => {
             case 'Matches':
                 navigate('/matches');
                 break;
+            default:
+                break;
+        }
+    };
+
+    const handleCloseUserMenu = (linkName) => {
+        setAnchorElUser(null);
+        switch (linkName) {
             case 'Profile':
                 navigate('/profile');
                 break;
@@ -65,10 +72,6 @@ const ResponsiveAppBar = () => {
             default:
                 break;
         }
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
     };
 
     if (["/bookshelf", "/wishlist", "/matches", "/profile"].indexOf(location.pathname) === -1) return <></>;
@@ -165,7 +168,7 @@ const ResponsiveAppBar = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={() => handleCloseNavMenu(setting)}>
+                                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
