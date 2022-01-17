@@ -42,6 +42,7 @@ const ResponsiveAppBar = () => {
 
     const handleCloseNavMenu = (linkName) => {
         setAnchorElNav(null);
+        setAnchorElUser(null);
         switch (linkName) {
             case 'Bookshelf':
                 navigate('/bookshelf');
