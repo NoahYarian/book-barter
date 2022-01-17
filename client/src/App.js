@@ -4,7 +4,7 @@ import { Container } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Userfront from "@userfront/react";
 
-import Navbar from './components/Navbar/Navbar';
+import AppBar from './components/AppBar/AppBar';
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
@@ -20,7 +20,7 @@ const App = () => {
         <BrowserRouter>
             <CssBaseline />
             <Container>
-                <Navbar />
+                <AppBar />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
