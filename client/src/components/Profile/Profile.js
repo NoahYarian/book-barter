@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { Typography, TextField, Button } from '@mui/material';
 import Userfront from '@userfront/react';
 
-import { userLoggedIn, updateUser } from '../../actions/user';
+import { userLoggedIn, updateUser, logOut } from '../../actions/user';
 
 const Profile = () => {
 
@@ -18,6 +18,7 @@ const Profile = () => {
     if (Userfront.accessToken()) {
         if (!user.name) dispatch(userLoggedIn(Userfront.user));
     } else {
+        dispatch(logOut());
         return (
             <Navigate
                 to={{

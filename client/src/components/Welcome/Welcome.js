@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import Userfront from '@userfront/react';
 
-import { userLoggedIn } from "../../actions/user";
+import { userLoggedIn, logOut } from "../../actions/user";
 
 const Welcome = () => {
 
@@ -15,6 +15,7 @@ const Welcome = () => {
     if (Userfront.accessToken()) {
         if (!user.name) dispatch(userLoggedIn(Userfront.user));
     } else {
+        dispatch(logOut());
         return (
             <Navigate
                 to={{
