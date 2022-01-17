@@ -16,6 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
 import { logOut } from '../../actions/user';
+import { socket } from '../../api';
 
 const pages = ['Bookshelf', 'Wishlist', 'Matches'];
 const settings = ['Profile', 'Logout'];
@@ -56,6 +57,7 @@ const ResponsiveAppBar = () => {
                 break;
             case 'Logout':
                 Userfront.logout();
+                socket.disconnect();
                 dispatch(logOut());
                 navigate('/');
                 break;
