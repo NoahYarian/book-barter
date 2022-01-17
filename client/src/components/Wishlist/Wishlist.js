@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import Userfront from '@userfront/react';
 
-import { socket } from '../../api/index';
 import { userLoggedIn } from "../../actions/user";
 import { getWishes } from '../../actions/wishes';
 import WishGrid from '../WishGrid/WishGrid';
@@ -22,10 +21,7 @@ const Wishlist = () => {
     }, [dispatch]);
 
     if (Userfront.accessToken()) {
-        if (!user.name) {
-            socket.emit('authenticated', Userfront.user.userUuid);
-            dispatch(userLoggedIn(Userfront.user));
-        }
+        if (!user.name) dispatch(userLoggedIn(Userfront.user));
     } else {
         return (
             <Navigate

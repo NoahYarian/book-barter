@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { Typography, TextField, Button } from '@mui/material';
 import Userfront from '@userfront/react';
 
-import { updateUser } from '../../actions/user';
+import { userLoggedIn, updateUser } from '../../actions/user';
 
 const Profile = () => {
 
@@ -15,7 +15,9 @@ const Profile = () => {
 
     const [userData, setUserData] = useState(user);
 
-    if (!Userfront.accessToken()) {
+    if (Userfront.accessToken()) {
+        if (!user.name) dispatch(userLoggedIn(Userfront.user));
+    } else {
         return (
             <Navigate
                 to={{

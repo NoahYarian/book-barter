@@ -5,6 +5,8 @@ export const userLoggedIn = (user) => async (dispatch) => {
     try {
         const { data } = await api.userLoggedIn(user);
 
+        api.socket.emit('authenticated', user.userUuid);
+
         dispatch({ type: USER_LOGGED_IN, payload: data });
     } catch (error) {
         console.log(error);
