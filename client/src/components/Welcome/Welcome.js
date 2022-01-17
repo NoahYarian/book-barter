@@ -28,7 +28,7 @@ const Welcome = () => {
     return (
         <Navigate
             to={{
-                pathname: "/dashboard",
+                pathname: "/bookshelf",
                 state: { from: location }
             }}
         />

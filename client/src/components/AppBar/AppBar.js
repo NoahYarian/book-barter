@@ -70,7 +70,7 @@ const ResponsiveAppBar = () => {
         setAnchorElUser(null);
     };
 
-    if (["/dashboard", "/profile"].indexOf(location.pathname) === -1) return <></>;
+    if (["/bookshelf", "/wishlist", "/matches", "/profile"].indexOf(location.pathname) === -1) return <></>;
 
     return (
         <AppBar position="static">
