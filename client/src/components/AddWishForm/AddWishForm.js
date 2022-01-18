@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Typography, TextField, Button } from '@mui/material';
+import { Paper, TextField, Button } from '@mui/material';
 
 import { createWish, updateWish } from '../../actions/wishes';
 
@@ -38,7 +38,6 @@ const AddWishForm = ({ currentWishId, setCurrentWishId }) => {
     return (
         <Paper>
             <form onSubmit={handleSubmit}>
-                <Typography variant="h6">Add a book or author to your wishlist</Typography>
                 <TextField name="title" variant="outlined" label="Title" value={wishData.title} onChange={(e) => setWishData({ ...wishData, title: e.target.value })} />
                 <TextField name="author" variant="outlined" label="Author" value={wishData.author} onChange={(e) => setWishData({ ...wishData, author: e.target.value })} />
                 <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>

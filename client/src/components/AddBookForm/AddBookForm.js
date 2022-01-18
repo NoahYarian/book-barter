@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, Typography, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel } from '@mui/material';
+import { Paper, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel } from '@mui/material';
 
 import { createBook, updateBook } from '../../actions/books';
 import Scanner from '../Scanner/Scanner';
@@ -56,9 +56,6 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     return (
         <Paper>
             <form onSubmit={handleSubmit}>
-                <Typography variant="h6">
-                    Add A Book
-                </Typography>
                 <TextField name="title" variant="outlined" label="Title" value={bookData.title} onChange={(e) => setBookData({ ...bookData, title: e.target.value })} />
                 <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} />
                 <TextField name="year" variant="outlined" label="Year" value={bookData.year} onChange={(e) => setBookData({ ...bookData, year: e.target.value })} />
