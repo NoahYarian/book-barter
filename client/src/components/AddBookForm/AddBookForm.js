@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel } from '@mui/material';
+import { Paper, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel, Typography } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBarcode } from '@fortawesome/free-solid-svg-icons'
 
 import { createBook, updateBook } from '../../actions/books';
 import Scanner from '../Scanner/Scanner';
@@ -56,13 +58,15 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     return (
         <Paper>
             <form onSubmit={handleSubmit}>
+                <Button color="primary" variant="contained" onClick={handleToggleScanner} fullWidth>
+                    <Typography><FontAwesomeIcon icon={faBarcode} />&nbsp;&nbsp;Scan Barcode</Typography>
+                </Button>
                 <TextField name="title" variant="outlined" label="Title" value={bookData.title} onChange={(e) => setBookData({ ...bookData, title: e.target.value })} />
                 <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} />
                 <TextField name="year" variant="outlined" label="Year" value={bookData.year} onChange={(e) => setBookData({ ...bookData, year: e.target.value })} />
                 <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} />
                 <Button variant="outlined" color="secondary" size="small" onClick={() => bookLookupFromISBN(bookData.isbn)}>Look Up</Button>
 
-                <Button onClick={handleToggleScanner}>Scan Barcode</Button>
                 <Backdrop open={backdropIsOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                     <Button variant="outlined" color="secondary" size="small" onClick={handleCloseScanner}>Close Scanner</Button>
                     <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen}  bookLookupFromISBN={bookLookupFromISBN} />
