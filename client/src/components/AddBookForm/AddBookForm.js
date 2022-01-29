@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel, Typography } from '@mui/material';
+import { Box, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBarcode } from '@fortawesome/free-solid-svg-icons'
 
@@ -56,51 +57,61 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     }
 
     return (
-        <Paper>
-            <form onSubmit={handleSubmit}>
-                <Button color="primary" variant="contained" onClick={handleToggleScanner} fullWidth>
-                    <Typography><FontAwesomeIcon icon={faBarcode} />&nbsp;&nbsp;Scan Barcode</Typography>
-                </Button>
-                <TextField name="title" variant="outlined" label="Title" value={bookData.title} onChange={(e) => setBookData({ ...bookData, title: e.target.value })} />
-                <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} />
-                <TextField name="year" variant="outlined" label="Year" value={bookData.year} onChange={(e) => setBookData({ ...bookData, year: e.target.value })} />
-                <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} />
-                <Button variant="outlined" color="secondary" size="small" onClick={() => bookLookupFromISBN(bookData.isbn)}>Look Up</Button>
+        <Box
+            component="form"
+            sx={{
+                '& .MuiTextField-root': { mt: 1 },
+            }}
+            autoComplete="off"
+            onSubmit={handleSubmit}
+        >
+            <Button color="primary" variant="contained" onClick={handleToggleScanner} sx={{ mt: -1 }} fullWidth>
+                <Typography><FontAwesomeIcon icon={faBarcode} />&nbsp;&nbsp;Scan Barcode</Typography>
+            </Button>
 
-                <Backdrop open={backdropIsOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                    <Button variant="outlined" color="secondary" size="small" onClick={handleCloseScanner}>Close Scanner</Button>
-                    <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen}  bookLookupFromISBN={bookLookupFromISBN} />
-                </Backdrop>
+            <Backdrop open={backdropIsOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                <Button variant="outlined" color="secondary" size="small" onClick={handleCloseScanner}>Close Scanner</Button>
+                <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen}  bookLookupFromISBN={bookLookupFromISBN} />
+            </Backdrop>
 
-                <FormControl sx={{ minWidth: 225}}>
-                    <InputLabel id="format-select-label">Format</InputLabel>
-                    <Select labelId="format-select-label" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })}>
-                        <MenuItem value="hardcover">Hardcover</MenuItem>
-                        <MenuItem value="tradePaperback">Trade Paperback</MenuItem>
-                        <MenuItem value="massMarketPaperback">Mass Market Paperback</MenuItem>
-                    </Select>
-                </FormControl>
+            <TextField name="title" variant="outlined" label="Title" value={bookData.title} onChange={(e) => setBookData({ ...bookData, title: e.target.value })} required fullWidth />
 
-                <FormControl sx={{ minWidth: 125 }}>
-                    <InputLabel id="condition-select-label">Condition</InputLabel>
-                    <Select labelId="condition-select-label" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })}>
-                        <MenuItem value="AsNew">As New</MenuItem>
-                        <MenuItem value="fine">Fine</MenuItem>
-                        <MenuItem value="veryGood">Very Good</MenuItem>
-                        <MenuItem value="good">Good</MenuItem>
-                        <MenuItem value="fair">Fair</MenuItem>
-                        <MenuItem value="poor">Poor</MenuItem>
-                    </Select>
-                </FormControl>
+            <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} required fullWidth />
 
-                <TextField sx={{ minWidth: 475 }} name="imageURL" variant="outlined" label="Cover Image URL" value={bookData.imageURL} onChange={(e) => setBookData({ ...bookData, imageURL: e.target.value })} />
-                <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} fullWidth />
-                {bookData.imageURL && <img src={bookData.imageURL} alt="book cover" />}
+            <Box fullWidth sx={{  textAlign: 'center' }}>
+                <TextField name="year" variant="outlined" label="Year" value={bookData.year} onChange={(e) => setBookData({ ...bookData, year: e.target.value })} sx={{ width: '75px', mr: 1 }} />
+                <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} sx={{ width: '150px', mr: 1 }} />
+                <Button variant="contained" color="primary" size="large" onClick={() => bookLookupFromISBN(bookData.isbn)} sx={{ mt: 1, height: '56px' }}><SearchIcon /></Button>
+            </Box>
 
-                <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
-                <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
-            </form>
-        </Paper>
+            <FormControl sx={{ mt: 1 }} fullWidth>
+                <InputLabel id="format-select-label">Format *</InputLabel>
+                <Select labelId="format-select-label" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })}>
+                    <MenuItem value="hardcover">Hardcover</MenuItem>
+                    <MenuItem value="tradePaperback">Trade Paperback</MenuItem>
+                    <MenuItem value="massMarketPaperback">Mass Market Paperback</MenuItem>
+                </Select>
+            </FormControl>
+
+            <FormControl sx={{ mt: 1 }} fullWidth>
+                <InputLabel id="condition-select-label">Condition *</InputLabel>
+                <Select labelId="condition-select-label" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })}>
+                    <MenuItem value="AsNew">As New</MenuItem>
+                    <MenuItem value="fine">Fine</MenuItem>
+                    <MenuItem value="veryGood">Very Good</MenuItem>
+                    <MenuItem value="good">Good</MenuItem>
+                    <MenuItem value="fair">Fair</MenuItem>
+                    <MenuItem value="poor">Poor</MenuItem>
+                </Select>
+            </FormControl>
+
+            <TextField name="imageURL" variant="outlined" label="Cover Image URL" value={bookData.imageURL} onChange={(e) => setBookData({ ...bookData, imageURL: e.target.value })} fullWidth />
+            <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} fullWidth />
+            {bookData.imageURL && <Box fullWidth sx={{ textAlign: 'center', mt: 1 }}><img src={bookData.imageURL} alt="book cover" /></Box>}
+
+            <Button sx={{ mt: 1 }} variant="contained" color="primary" size="large" type="submit" fullWidth><Typography>Submit</Typography></Button>
+            <Button sx={{ mt: 1 }} variant="contained" color="secondary" size="small" onClick={clear} fullWidth><Typography>Clear</Typography></Button>
+        </Box>
     );
 }
 
