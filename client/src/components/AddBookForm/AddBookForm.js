@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, TextField, Button, Backdrop, Select, FormControl, MenuItem, InputLabel, Typography } from '@mui/material';
+import DateAdapter from '@mui/lab/AdapterDayjs';
+import { LocalizationProvider, DatePicker } from '@mui/lab';
+import dayjs from 'dayjs';
 import SearchIcon from '@mui/icons-material/Search';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBarcode } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBarcode } from '@fortawesome/free-solid-svg-icons';
 
 import { createBook, updateBook } from '../../actions/books';
 import Scanner from '../Scanner/Scanner';
@@ -11,7 +14,7 @@ import Scanner from '../Scanner/Scanner';
 const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     const dispatch = useDispatch();
 
-    const initialState = { title: '', author: '', isbn: '', year: '', format: '', condition: '', details: '', imageURL: '' };
+    const initialState = { title: '', author: '', isbn: '', year: null, format: '', condition: '', details: '', imageURL: '' };
     const [bookData, setBookData] = useState(initialState);
 
     const book = useSelector((state) => currentBookId ? state.books.find((book) => book._id === currentBookId) : null);
@@ -51,7 +54,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             isbn,
             title: data[`ISBN:${isbn}`].title,
             author: data[`ISBN:${isbn}`].authors[0].name,
-            year: data[`ISBN:${isbn}`].publish_date,
+            year: dayjs(data[`ISBN:${isbn}`].publish_date).year(),
             imageURL: `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`
         }));
     }
@@ -79,7 +82,16 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} required fullWidth />
 
             <Box fullWidth sx={{  textAlign: 'center' }}>
-                <TextField name="year" variant="outlined" label="Year" value={bookData.year} onChange={(e) => setBookData({ ...bookData, year: e.target.value })} sx={{ width: '75px', mr: 1 }} />
+                <LocalizationProvider dateAdapter={DateAdapter}>
+                    <DatePicker
+                        label="Year"
+                        views={['year']}
+                        value={bookData.year}
+                        maxDate={dayjs()}
+                        onChange={(newValue) => setBookData({ ...bookData, year: dayjs(newValue).year() })}
+                        renderInput={(params) => <TextField {...params} sx={{ width: '100px', mr: 1 }} />}
+                    />
+                </LocalizationProvider>
                 <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} sx={{ width: '150px', mr: 1 }} />
                 <Button variant="contained" color="primary" size="large" onClick={() => bookLookupFromISBN(bookData.isbn)} sx={{ mt: 1, height: '56px' }}><SearchIcon /></Button>
             </Box>
