@@ -99,21 +99,21 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             <FormControl sx={{ mt: 1 }} fullWidth>
                 <InputLabel id="format-select-label">Format *</InputLabel>
                 <Select labelId="format-select-label" label="Format" value={bookData.format} onChange={(e) => setBookData({ ...bookData, format: e.target.value })}>
-                    <MenuItem value="hardcover">Hardcover</MenuItem>
-                    <MenuItem value="tradePaperback">Trade Paperback</MenuItem>
-                    <MenuItem value="massMarketPaperback">Mass Market Paperback</MenuItem>
+                    <MenuItem value="Hardcover">Hardcover</MenuItem>
+                    <MenuItem value="Trade Paperback">Trade Paperback</MenuItem>
+                    <MenuItem value="Mass Market Paperback">Mass Market Paperback</MenuItem>
                 </Select>
             </FormControl>
 
             <FormControl sx={{ mt: 1 }} fullWidth>
                 <InputLabel id="condition-select-label">Condition *</InputLabel>
                 <Select labelId="condition-select-label" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })}>
-                    <MenuItem value="AsNew">As New</MenuItem>
-                    <MenuItem value="fine">Fine</MenuItem>
-                    <MenuItem value="veryGood">Very Good</MenuItem>
-                    <MenuItem value="good">Good</MenuItem>
-                    <MenuItem value="fair">Fair</MenuItem>
-                    <MenuItem value="poor">Poor</MenuItem>
+                    <MenuItem value="As New">As New</MenuItem>
+                    <MenuItem value="Fine">Fine</MenuItem>
+                    <MenuItem value="Very Good">Very Good</MenuItem>
+                    <MenuItem value="Good">Good</MenuItem>
+                    <MenuItem value="Fair">Fair</MenuItem>
+                    <MenuItem value="Poor">Poor</MenuItem>
                 </Select>
             </FormControl>
 
