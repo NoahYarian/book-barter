@@ -47,8 +47,14 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
     }
 
     const bookLookupFromISBN = async (isbn) => {
+        if (!(isbn.length === 13 || isbn.length === 10) || isNaN(Number(isbn))) return;
         const response = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
         const data = await response.json();
+        const isbnData = data[`ISBN:${isbn}`];
+        if (!isbnData?.title ||
+            !isbnData?.authors[0]?.name ||
+            !isbnData?.publish_date) return;
+
         setBookData(prev => ({
             ...prev,
             isbn,
