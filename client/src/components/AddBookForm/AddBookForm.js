@@ -58,9 +58,9 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
         setBookData(prev => ({
             ...prev,
             isbn,
-            title: data[`ISBN:${isbn}`].title,
-            author: data[`ISBN:${isbn}`].authors[0].name,
-            year: dayjs(data[`ISBN:${isbn}`].publish_date),
+            title: isbnData.title,
+            author: isbnData.authors[0].name,
+            year: dayjs(isbnData.publish_date),
             imageURL: `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`
         }));
     }
