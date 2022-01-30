@@ -121,7 +121,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             </FormControl>
 
             <TextField name="imageURL" variant="outlined" label="Cover Image URL" value={bookData.imageURL} onChange={(e) => setBookData({ ...bookData, imageURL: e.target.value })} fullWidth />
-            <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} fullWidth />
+            <TextField name="details" variant="outlined" label="Details" value={bookData.details} onChange={(e) => setBookData({ ...bookData, details: e.target.value })} multiline fullWidth />
             {bookData.imageURL && <Box fullWidth sx={{ textAlign: 'center', mt: 1 }}><img src={bookData.imageURL} alt="book cover" /></Box>}
 
             <Button sx={{ mt: 1 }} variant="contained" color="primary" size="large" type="submit" fullWidth><Typography>Submit</Typography></Button>
