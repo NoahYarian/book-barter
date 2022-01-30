@@ -77,11 +77,16 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                 <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen}  bookLookupFromISBN={bookLookupFromISBN} />
             </Backdrop>
 
+            <Box fullWidth sx={{  textAlign: 'center' }}>
+                <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} sx={{ width: "calc(100% - 76px)", mr: 1 }} />
+                <Button variant="contained" color="primary" size="large" onClick={() => bookLookupFromISBN(bookData.isbn)} sx={{ mt: 1, height: '56px' }}><SearchIcon /></Button>
+            </Box>
+
             <TextField name="title" variant="outlined" label="Title" value={bookData.title} onChange={(e) => setBookData({ ...bookData, title: e.target.value })} required fullWidth />
 
             <TextField name="author" variant="outlined" label="Author" value={bookData.author} onChange={(e) => setBookData({ ...bookData, author: e.target.value })} required fullWidth />
 
-            <Box fullWidth sx={{  textAlign: 'center' }}>
+            <Box fullWidth>
                 <LocalizationProvider dateAdapter={DateAdapter}>
                     <DatePicker
                         label="Year"
@@ -92,8 +97,18 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                         renderInput={(params) => <TextField {...params} sx={{ width: '100px', mr: 1 }} />}
                     />
                 </LocalizationProvider>
-                <TextField name="isbn" variant="outlined" label="ISBN" value={bookData.isbn} onChange={(e) => setBookData({ ...bookData, isbn: e.target.value })} sx={{ width: '150px', mr: 1 }} />
-                <Button variant="contained" color="primary" size="large" onClick={() => bookLookupFromISBN(bookData.isbn)} sx={{ mt: 1, height: '56px' }}><SearchIcon /></Button>
+
+                <FormControl sx={{ mt: 1, width: 'calc(100% - 108px)' }}>
+                    <InputLabel id="condition-select-label">Condition *</InputLabel>
+                    <Select labelId="condition-select-label" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })}>
+                        <MenuItem value="As New">As New</MenuItem>
+                        <MenuItem value="Fine">Fine</MenuItem>
+                        <MenuItem value="Very Good">Very Good</MenuItem>
+                        <MenuItem value="Good">Good</MenuItem>
+                        <MenuItem value="Fair">Fair</MenuItem>
+                        <MenuItem value="Poor">Poor</MenuItem>
+                    </Select>
+                </FormControl>
             </Box>
 
             <FormControl sx={{ mt: 1 }} fullWidth>
@@ -102,18 +117,6 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                     <MenuItem value="Hardcover">Hardcover</MenuItem>
                     <MenuItem value="Trade Paperback">Trade Paperback</MenuItem>
                     <MenuItem value="Mass Market Paperback">Mass Market Paperback</MenuItem>
-                </Select>
-            </FormControl>
-
-            <FormControl sx={{ mt: 1 }} fullWidth>
-                <InputLabel id="condition-select-label">Condition *</InputLabel>
-                <Select labelId="condition-select-label" label="Condition" value={bookData.condition} onChange={(e) => setBookData({ ...bookData, condition: e.target.value })}>
-                    <MenuItem value="As New">As New</MenuItem>
-                    <MenuItem value="Fine">Fine</MenuItem>
-                    <MenuItem value="Very Good">Very Good</MenuItem>
-                    <MenuItem value="Good">Good</MenuItem>
-                    <MenuItem value="Fair">Fair</MenuItem>
-                    <MenuItem value="Poor">Poor</MenuItem>
                 </Select>
             </FormControl>
 
