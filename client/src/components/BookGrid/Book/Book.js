@@ -1,6 +1,7 @@
 import { Card, Typography, Button } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
 
 import { deleteBook } from '../../../actions/books';
 
@@ -12,7 +13,7 @@ const Book = ({ book, setCurrentBookId }) => {
             <Typography variant="h5">{book.title}</Typography>
             <Typography variant="h6">by {book.author}</Typography>
             <Typography variant="body2">ISBN: {book.isbn}</Typography>
-            <Typography variant="body2">Year: {book.year}</Typography>
+            <Typography variant="body2">Year: {dayjs(book.year).year()}</Typography>
             <Typography variant="body2">Format: {book.format}</Typography>
             <Typography variant="body2">Condition: {book.condition}</Typography>
             <Typography variant="body2">Details: {book.details}</Typography>

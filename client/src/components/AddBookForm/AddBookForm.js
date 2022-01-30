@@ -54,7 +54,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             isbn,
             title: data[`ISBN:${isbn}`].title,
             author: data[`ISBN:${isbn}`].authors[0].name,
-            year: dayjs(data[`ISBN:${isbn}`].publish_date).year(),
+            year: dayjs(data[`ISBN:${isbn}`].publish_date),
             imageURL: `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`
         }));
     }
@@ -88,7 +88,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
                         views={['year']}
                         value={bookData.year}
                         maxDate={dayjs()}
-                        onChange={(newValue) => setBookData({ ...bookData, year: dayjs(newValue).year() })}
+                        onChange={(newValue) => setBookData({ ...bookData, year: newValue })}
                         renderInput={(params) => <TextField {...params} sx={{ width: '100px', mr: 1 }} />}
                     />
                 </LocalizationProvider>
