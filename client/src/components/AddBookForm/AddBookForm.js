@@ -52,6 +52,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
         const data = await response.json();
         const isbnData = data[`ISBN:${isbn}`];
         if (!isbnData?.title ||
+            !isbnData?.authors ||
             !isbnData?.authors[0]?.name ||
             !isbnData?.publish_date) return;
 
