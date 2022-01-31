@@ -8,9 +8,9 @@ const WishGrid = ({ setCurrentWishId }) => {
     const wishes = useSelector((state) => state.wishes);
 
     return (
-        <Grid container>
+        <Grid container sx={{ mb: 1 }}>
             {wishes.map((wish) => (
-                <Grid item key={wish._id}>
+                <Grid item key={wish._id} sx={{ width: '100%', mt: 1 }}>
                     <Wish wish={wish} setCurrentWishId={setCurrentWishId} />
                 </Grid>
             ))}
