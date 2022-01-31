@@ -8,7 +8,7 @@ const BookGrid = ({ setCurrentBookId }) => {
     const books = useSelector((state) => state.books);
 
     return (
-        <Grid container>
+        <Grid container sx={{ mb: 1 }}>
             {books.map((book) => (
                 <Grid item key={book._id} sx={{ width: '100%', mt: 1 }}>
                     <Book book={book} setCurrentBookId={setCurrentBookId} />
