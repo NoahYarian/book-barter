@@ -72,6 +72,25 @@ const ResponsiveAppBar = () => {
 
     if (["/bookshelf", "/wishlist", "/matches", "/profile"].indexOf(location.pathname) === -1) return <></>;
 
+    let header;
+    switch (location.pathname) {
+        case "/bookshelf":
+            header = "Bookshelf";
+            break;
+        case "/wishlist":
+            header = "Wishlist";
+            break;
+        case "/matches":
+            header = "Matches";
+            break;
+        case "/profile":
+            header = "Profile";
+            break;
+        default:
+            header = "Book Barter";
+            break;
+    }
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -122,12 +141,12 @@ const ResponsiveAppBar = () => {
                         </Menu>
                     </Box>
                     <Typography
-                        variant="h6"
+                        variant="button"
                         noWrap
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                     >
-                        BOOK BARTER
+                        {header}
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
