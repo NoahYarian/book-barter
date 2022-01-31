@@ -14,8 +14,8 @@ const Wish = ({ wish, setCurrentWishId }) => {
                 <Typography variant="subtitle2">by {wish.author}</Typography> :
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>{wish.author}</Typography>
             }
-            <Button size="small" variant="contained" color="primary" onClick={() => setCurrentWishId(wish._id)} sx={{ width: 'calc(50% - 4px)', mr: 1 }}>Edit</Button>
-            <Button size="small" variant="contained" color="error" onClick={() => dispatch(deleteWish(wish._id))} sx={{ width: 'calc(50% - 4px)' }}>Delete</Button>
+            <Button size="small" variant="contained" color="primary" onClick={() => setCurrentWishId(wish._id)} sx={{ width: 'calc(50% - 4px)', mr: 1, mt: 1 }}>Edit</Button>
+            <Button size="small" variant="contained" color="error" onClick={() => dispatch(deleteWish(wish._id))} sx={{ width: 'calc(50% - 4px)', mt: 1 }}>Delete</Button>
         </Card>
     );
 }
