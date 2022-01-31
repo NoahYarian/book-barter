@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Paper, TextField, Button } from '@mui/material';
+import { Paper, TextField, Button, Box } from '@mui/material';
 
 import { createWish, updateWish } from '../../actions/wishes';
 
@@ -36,14 +36,17 @@ const AddWishForm = ({ currentWishId, setCurrentWishId }) => {
     }
 
     return (
-        <Paper>
-            <form onSubmit={handleSubmit}>
-                <TextField name="title" variant="outlined" label="Title" value={wishData.title} onChange={(e) => setWishData({ ...wishData, title: e.target.value })} />
-                <TextField name="author" variant="outlined" label="Author" value={wishData.author} onChange={(e) => setWishData({ ...wishData, author: e.target.value })} />
-                <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
-                <Button variant="contained" color="error" size="small" onClick={clear} fullWidth>Clear</Button>
-            </form>
-        </Paper>
+        <Box
+            component="form"
+            sx={{ '> *': { mt: 1 } }}
+            autoComplete="off"
+            onSubmit={handleSubmit}
+        >
+            <TextField sx={{ mt: -1 }} name="title" variant="outlined" label="Title" value={wishData.title} onChange={(e) => setWishData({ ...wishData, title: e.target.value })} fullWidth />
+            <TextField name="author" variant="outlined" label="Author" value={wishData.author} onChange={(e) => setWishData({ ...wishData, author: e.target.value })} required fullWidth />
+            <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+            <Button variant="contained" color="error" size="small" onClick={clear} fullWidth>Clear</Button>
+        </Box>
     );
 }
 
