@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Button, Grid } from '@mui/material';
@@ -14,6 +14,10 @@ const Matches = () => {
 
     const matches = useSelector((state) => state.matches);
     const user = useSelector(state => state.user);
+
+    useEffect(() => {
+        dispatch(getMatches());
+    }, [dispatch]);
 
     const handleClick = () => {
         dispatch(getMatches());
@@ -33,9 +37,9 @@ const Matches = () => {
         );
     }
 
+
     return (
         <div>
-            <Button onClick={handleClick}>Get Matches</Button>
             <Grid container>
                 {matches.map((match) => (
                     <Grid item key={match.theirUser.userId}>
@@ -43,6 +47,7 @@ const Matches = () => {
                     </Grid>
                 ))}
             </Grid>
+            <Button onClick={handleClick}>Update Matches</Button>
         </div>
     );
 }
