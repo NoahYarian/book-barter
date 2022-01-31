@@ -132,7 +132,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             {bookData.imageURL && <Box fullWidth sx={{ textAlign: 'center', mt: 1 }}><img src={bookData.imageURL} alt="book cover" /></Box>}
 
             <Button sx={{ mt: 1 }} variant="contained" color="primary" size="large" type="submit" fullWidth><Typography>Submit</Typography></Button>
-            <Button sx={{ mt: 1 }} variant="contained" color="secondary" size="small" onClick={clear} fullWidth><Typography>Clear</Typography></Button>
+            <Button sx={{ mt: 1 }} variant="contained" color="error" size="small" onClick={clear} fullWidth><Typography>Clear</Typography></Button>
         </Box>
     );
 }

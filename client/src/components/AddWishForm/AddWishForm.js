@@ -41,7 +41,7 @@ const AddWishForm = ({ currentWishId, setCurrentWishId }) => {
                 <TextField name="title" variant="outlined" label="Title" value={wishData.title} onChange={(e) => setWishData({ ...wishData, title: e.target.value })} />
                 <TextField name="author" variant="outlined" label="Author" value={wishData.author} onChange={(e) => setWishData({ ...wishData, author: e.target.value })} />
                 <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
-                <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
+                <Button variant="contained" color="error" size="small" onClick={clear} fullWidth>Clear</Button>
             </form>
         </Paper>
     );
