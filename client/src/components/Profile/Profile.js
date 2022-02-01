@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import { Typography, TextField, Button } from '@mui/material';
+import { Typography, TextField, Button, Box, Avatar } from '@mui/material';
 import Userfront from '@userfront/react';
 
 import { userLoggedIn, updateUser, logOut } from '../../actions/user';
@@ -14,6 +14,7 @@ const Profile = () => {
     const user = useSelector((state) => state.user);
 
     const [userData, setUserData] = useState(user);
+    const [imageURL, setImageURL] = useState(user.imageURL);
 
     if (Userfront.accessToken()) {
         if (!user.name) dispatch(userLoggedIn(Userfront.user));
@@ -35,17 +36,75 @@ const Profile = () => {
     }
 
     return (
-        <div>
-            <Typography variant="h2">User Profile for {userData.username}</Typography>
-            <img src={userData.imageURL} alt="user avatar" style={{width: "200px"}} />
-            <form onSubmit={handleSubmit}>
-                <TextField name="name" variant="outlined" label="Name" value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
-                <TextField name="email" variant="outlined" label="E-mail" value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
-                <TextField name="imageURL" variant="outlined" label="Image URL" value={userData.imageURL} onChange={(e) => setUserData({ ...userData, imageURL: e.target.value })} fullWidth />
-                <Button variant="contained" color="primary" size="large" type="submit">Save Changes</Button>
-            </form>
+        <>
+            <Box>
+                <Avatar
+                    alt={userData.imageURL}
+                    src={userData.imageURL}
+                    sx={{ width: '224px', height: '224px', m: 'auto', mt: 1 }}
+                />
+            </Box>
+            <Box
+                component="form"
+                onSubmit={handleSubmit}
+                autoComplete="off"
+                sx={{ '& .MuiTextField-root, .MuiButtonBase-root': { mt: 1 } }}
+            >
+                <TextField
+                    disabled
+                    name="Username"
+                    label="Username"
+                    value={userData.username}
+                    variant="outlined"
+                    fullWidth
+                />
+                <TextField
+                    name="name"
+                    label="Name"
+                    value={userData.name}
+                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                    variant="outlined"
+                    fullWidth
+                />
+                <TextField
+                    name="email"
+                    label="E-mail"
+                    value={userData.email}
+                    onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                    variant="outlined"
+                    fullWidth
+                />
+                <Box fullWidth>
+                    <TextField
+                        name="imageURL"
+                        label="Image URL"
+                        value={imageURL}
+                        onChange={(e) => setImageURL(e.target.value)}
+                        variant="outlined"
+                        sx={{ width: 'calc(100% - 72px)' }}
+                    />
+                    <Button
+                        onClick={() => setUserData({ ...userData, imageURL })}
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        sx={{ height: '56px', ml: 1 }}
+                    >
+                        <Typography>Set</Typography>
+                    </Button>
+                </Box>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                >
+                    <Typography>Save Changes</Typography>
+                </Button>
+            </Box>
 
-        </div>
+        </>
     );
 }
 
