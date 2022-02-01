@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { Card, Typography, Button, TextField, List, ListItem } from '@mui/material';
+import { Card, Typography, Button, TextField, List, ListItem, ListItemText, Box, Avatar, Accordion, AccordionDetails, AccordionSummary, Chip } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -13,8 +14,8 @@ dayjs.extend(relativeTime);
 const Match = ({ match }) => {
     const dispatch = useDispatch();
 
-    const [isChatting, setIsChatting] = useState(false);
     const [textField, setTextField] = useState('');
+    const [accordionExpanded, setAccordionExpanded] = useState(false);
 
     useEffect(() => {
         socket.on("newMessage", (message) => {
@@ -52,41 +53,80 @@ const Match = ({ match }) => {
 
      return (
          <div>
-            <Card>
-                <Typography variant="h5">{match.theirUser.name}</Typography>
-                <Typography variant="body2">Books of theirs I want:</Typography>
-                <ul>
+            <Card elevation={4} sx={{ mt: 1, p: 1 }}>
+                <Box>
+                    <Avatar src={match.theirUser.imageURL} alt={match.theirUser.name} sx={{ display: 'inline-block' }} />
+                    <Typography variant="h4" sx={{ fontWeight: 600, ml: 1, display: 'inline' }}>{match.theirUser.name}</Typography>
+                </Box>
+                <Typography variant="h6" sx={{ mt: .5 }}>Their books on your wishlist:</Typography>
+                <List>
                     { match.booksOfTheirsIWant.map((book) => (
-                        <li key={book._id}>{book.author} - {book.title}</li>
+                        <ListItem key={book._id}>
+                            <ListItemText primary={book.title} secondary={'by ' + book.author} />
+                        </ListItem>
                     ))}
-                </ul>
-                <Typography variant="body2">Books of mine they want:</Typography>
-                <ul>
+                </List>
+                <Typography variant="h6">Your books on their wishlist:</Typography>
+                <List>
                     { match.booksOfMineTheyWant.map((book) => (
-                        <li key={book._id}>{book.author} - {book.title}</li>
+                        <ListItem key={book._id}>
+                            <ListItemText primary={book.title} secondary={'by ' + book.author} />
+                        </ListItem>
                     ))}
-                </ul>
-                <Button variant="contained" color="secondary" size="small" onClick={() => setIsChatting(!isChatting)} fullWidth>{isChatting ? 'Hide' : 'Show'} Chat</Button>
+                </List>
+
+                <Accordion expanded={accordionExpanded} onChange={() => setAccordionExpanded(prev => !prev)}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ backgroundColor: "rgba(0,0,0,.06)"}}>
+                        <Typography>{accordionExpanded ? 'Hide' : 'Show'} Chat</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ p: 0 }}>
+                        <List sx={{ overflow: "auto", maxHeight: 250 }}>
+                            {match.conversation.map((message) => {
+                                return (
+                                    <ListItem
+                                        key={message.time}
+                                        sx={{ justifyContent: message.from.userId === match.myUser.userId ? 'flex-end' : 'flex-start' }}
+                                    >
+                                        <Chip
+                                            avatar={<Avatar sx={{ mt: .5 }} alt={message.from.name + ' - ' + dayjs(message.time).fromNow()} src={message.from.imageURL} />}
+                                            label={<Typography sx={{whiteSpace: 'normal', pt: .5, pb: .5 }}>{message.text}</Typography>}
+                                            variant="outlined"
+                                            sx={{ maxWidth: '100%', height: '100%', alignItems: 'flex-start' }}
+                                        />
+                                    </ListItem>
+                                );
+                            })}
+                            <div ref={messageEndRef}></div>
+                        </List>
+                        <Box
+                            sx={{ p: 1, '& .MuiOutlinedInput-root': { width: 'calc(100% - 74px)' } }}
+                            component="form"
+                            onSubmit={handleSubmit}
+                        >
+                            <TextField
+                                sx={{ display: 'inline' }}
+                                name="chat"
+                                variant="outlined"
+                                multiline
+                                maxRows={4}
+                                autoComplete='off'
+                                value={textField}
+                                onChange={(e) => setTextField(e.target.value)}
+                            />
+                            <Button
+                                sx={{ display: 'inline', height: '56px', ml: 1 }}
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                type='submit'
+                            >
+                                <Typography>Send</Typography>
+                            </Button>
+                        </Box>
+                    </AccordionDetails>
+                </Accordion>
+
             </Card>
-            { isChatting &&
-                <Card>
-                    <List sx={{ overflow: "auto", maxHeight: 250}}>
-                        {match.conversation.map((message) => {
-                            return (
-                                <ListItem style={{ display: 'flex' }} key={message.time}>
-                                    <img src={message.from.imageURL} alt="avatar" style={{ width: "30px" }} />
-                                    <Typography variant="body2">{message.from.name} - {dayjs(message.time).fromNow()} - {message.text}</Typography>
-                                </ListItem>
-                            );
-                        })}
-                        <div ref={messageEndRef}></div>
-                    </List>
-                    <form onSubmit={handleSubmit}>
-                        <TextField name="chat" variant="outlined" label="Type a message" value={textField} onChange={(e) => setTextField(e.target.value)} />
-                        <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Send</Button>
-                    </form>
-                </Card>
-            }
         </div>
     );
 }
