@@ -39,6 +39,10 @@ const Match = ({ match }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (textField.length === 0 || textField.match(/^\s*$/g)) {
+            setTextField('');
+            return;
+        }
         let message = {
             from: match.myUser,
             to: match.theirUser,
