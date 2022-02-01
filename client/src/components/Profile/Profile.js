@@ -59,18 +59,18 @@ const Profile = () => {
                     fullWidth
                 />
                 <TextField
-                    name="name"
-                    label="Name"
-                    value={userData.name}
-                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+                    disabled
+                    name="email"
+                    label="E-mail"
+                    value={userData.email}
                     variant="outlined"
                     fullWidth
                 />
                 <TextField
-                    name="email"
-                    label="E-mail"
-                    value={userData.email}
-                    onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                    name="name"
+                    label="Name"
+                    value={userData.name}
+                    onChange={(e) => setUserData({ ...userData, name: e.target.value })}
                     variant="outlined"
                     fullWidth
                 />
