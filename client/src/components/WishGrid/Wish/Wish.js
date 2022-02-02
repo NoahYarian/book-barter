@@ -1,11 +1,7 @@
 import { Card, Typography, Button } from '@mui/material';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
-import { deleteWish } from '../../../actions/wishes';
-
-const Wish = ({ wish, setCurrentWishId }) => {
-    const dispatch = useDispatch();
+const Wish = ({ wish, setCurrentWishId, confirmBeforeDelete }) => {
 
     return (
         <Card elevation={4} sx={{ width: '100%', p: 1 }}>
@@ -15,7 +11,7 @@ const Wish = ({ wish, setCurrentWishId }) => {
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>{wish.author}</Typography>
             }
             <Button size="small" variant="contained" color="primary" onClick={() => setCurrentWishId(wish._id)} sx={{ width: 'calc(50% - 4px)', mr: 1, mt: 1 }}>Edit</Button>
-            <Button size="small" variant="contained" color="error" onClick={() => dispatch(deleteWish(wish._id))} sx={{ width: 'calc(50% - 4px)', mt: 1 }}>Delete</Button>
+            <Button size="small" variant="contained" color="error" onClick={() => confirmBeforeDelete(wish._id)} sx={{ width: 'calc(50% - 4px)', mt: 1 }}>Delete</Button>
         </Card>
     );
 }
