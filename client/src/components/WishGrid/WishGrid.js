@@ -5,7 +5,7 @@ import { Grid, Card, Typography, Dialog, DialogTitle, DialogActions, Button } fr
 import { deleteWish } from '../../actions/wishes';
 import Wish from './Wish/Wish';
 
-const WishGrid = ({ setCurrentWishId }) => {
+const WishGrid = ({ handleEdit }) => {
     const dispatch = useDispatch();
 
     const wishes = useSelector((state) => state.wishes);
@@ -29,7 +29,7 @@ const WishGrid = ({ setCurrentWishId }) => {
                 {wishes.length > 0 ?
                     wishes.map((wish) => (
                         <Grid item key={wish._id} sx={{ width: '100%', mt: 1 }}>
-                            <Wish wish={wish} setCurrentWishId={setCurrentWishId} confirmBeforeDelete={confirmBeforeDelete} />
+                            <Wish wish={wish} confirmBeforeDelete={confirmBeforeDelete} handleEdit={handleEdit} />
                         </Grid>
                     )) :
                     <Grid item sx={{ width: '100%', mt: 1 }}>

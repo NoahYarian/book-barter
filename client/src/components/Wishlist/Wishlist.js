@@ -17,14 +17,29 @@ const Wishlist = () => {
     const dispatch = useDispatch();
     const location = useLocation();
 
+    const initialState = { title: '', author: '' };
+    const [wishData, setWishData] = useState(initialState);
     const [currentWishId, setCurrentWishId] = useState(null);
-    const [accordianExpanded, setAccordianExpanded] = useState(false);
+    const [accordionExpanded, setAccordionExpanded] = useState(false);
+
 
     const user = useSelector(state => state.user);
 
     useEffect(() => {
         dispatch(getWishes());
     }, [dispatch]);
+
+    const clear = () => {
+        setCurrentWishId(null);
+        setWishData(initialState);
+    }
+
+    const handleEdit = (wishId) => {
+        clear();
+        setCurrentWishId(wishId);
+        setAccordionExpanded(true);
+        window.scrollTo(0,0);
+    }
 
     if (Userfront.accessToken()) {
         if (!user.name) dispatch(userLoggedIn(Userfront.user));
@@ -42,15 +57,15 @@ const Wishlist = () => {
 
     return (
         <div>
-            <Accordion expanded={accordianExpanded} onChange={() => setAccordianExpanded(prev => !prev)}>
+            <Accordion expanded={accordionExpanded} onChange={() => setAccordionExpanded(prev => !prev)}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} >
                     <Typography>Add a book or author</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <AddWishForm currentWishId={currentWishId} setCurrentWishId={setCurrentWishId} />
+                    <AddWishForm currentWishId={currentWishId} wishData={wishData} setWishData={setWishData} clear={clear} />
                 </AccordionDetails>
             </Accordion>
-            <WishGrid setCurrentWishId={setCurrentWishId} />
+            <WishGrid handleEdit={handleEdit} />
         </div>
     );
 }

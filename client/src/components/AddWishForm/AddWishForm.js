@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Box } from '@mui/material';
 
 import { createWish, updateWish } from '../../actions/wishes';
 
-const AddWishForm = ({ currentWishId, setCurrentWishId }) => {
+const AddWishForm = ({ currentWishId, wishData, setWishData, clear }) => {
     const dispatch = useDispatch();
-
-    const initialState = { title: '', author: '' };
-    const [wishData, setWishData] = useState(initialState);
 
     const wish = useSelector((state) => currentWishId ? state.wishes.find((wish) => wish._id === currentWishId) : null);
     const userId = useSelector((state) => state.user.userId);
 
     useEffect(() => {
         if (wish) setWishData(wish);
-    }, [wish]);
+    }, [wish, setWishData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,12 +26,6 @@ const AddWishForm = ({ currentWishId, setCurrentWishId }) => {
         }
         clear();
     }
-
-    const clear = () => {
-        setCurrentWishId(null);
-        setWishData(initialState);
-    }
-
     return (
         <Box
             component="form"
