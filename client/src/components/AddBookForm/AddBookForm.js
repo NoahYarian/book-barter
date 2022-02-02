@@ -11,11 +11,8 @@ import { faBarcode } from '@fortawesome/free-solid-svg-icons';
 import { createBook, updateBook } from '../../actions/books';
 import Scanner from '../Scanner/Scanner';
 
-const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
+const AddBookForm = ({ currentBookId, bookData, setBookData, clear }) => {
     const dispatch = useDispatch();
-
-    const initialState = { title: '', author: '', isbn: '', year: null, format: '', condition: '', details: '', imageURL: '' };
-    const [bookData, setBookData] = useState(initialState);
 
     const book = useSelector((state) => currentBookId ? state.books.find((book) => book._id === currentBookId) : null);
     const userId = useSelector((state) => state.user.userId);
@@ -26,7 +23,7 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
 
     useEffect(() => {
         if (book) setBookData(book);
-    }, [book]);
+    }, [book, setBookData]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,11 +36,6 @@ const AddBookForm = ({ currentBookId, setCurrentBookId }) => {
             dispatch(createBook(bookDataWithUserId));
         }
         clear();
-    }
-
-    const clear = () => {
-        setCurrentBookId(null);
-        setBookData(initialState);
     }
 
     const bookLookupFromISBN = async (isbn) => {

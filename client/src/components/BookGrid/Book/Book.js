@@ -2,7 +2,7 @@ import { Card, Typography, Button, Box } from '@mui/material';
 import React from 'react';
 import dayjs from 'dayjs';
 
-const Book = ({ book, setCurrentBookId, confirmBeforeDelete }) => {
+const Book = ({ book, confirmBeforeDelete, handleEdit }) => {
 
     return (
         <Card elevation={4} sx={{ width: '100%', p: 1 }}>
@@ -23,7 +23,7 @@ const Book = ({ book, setCurrentBookId, confirmBeforeDelete }) => {
                 </Box>
             }
             <Box fullWidth>
-                <Button size="small" variant="contained" color="primary" onClick={() => setCurrentBookId(book._id)} sx={{ width: 'calc(50% - 4px)', mr: 1 }}>Edit</Button>
+                <Button size="small" variant="contained" color="primary" onClick={() => handleEdit(book._id)} sx={{ width: 'calc(50% - 4px)', mr: 1 }}>Edit</Button>
                 <Button size="small" variant="contained" color="error" onClick={() => confirmBeforeDelete(book._id)} sx={{ width: 'calc(50% - 4px)'}}>Delete</Button>
             </Box>
         </Card>

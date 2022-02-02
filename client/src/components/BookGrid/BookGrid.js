@@ -5,7 +5,7 @@ import { Grid, Typography, Card, Dialog, DialogTitle, DialogActions, Button } fr
 import { deleteBook } from '../../actions/books';
 import Book from './Book/Book';
 
-const BookGrid = ({ setCurrentBookId }) => {
+const BookGrid = ({ handleEdit }) => {
     const dispatch = useDispatch();
 
     const books = useSelector((state) => state.books);
@@ -29,7 +29,7 @@ const BookGrid = ({ setCurrentBookId }) => {
                 {books.length > 0 ?
                     books.map((book) => (
                         <Grid item key={book._id} sx={{ width: '100%', mt: 1 }}>
-                            <Book book={book} setCurrentBookId={setCurrentBookId} confirmBeforeDelete={confirmBeforeDelete} />
+                            <Book book={book} confirmBeforeDelete={confirmBeforeDelete} handleEdit={handleEdit} />
                         </Grid>
                     )) :
                     <Grid item sx={{ width: '100%', mt: 1 }}>

@@ -14,6 +14,8 @@ const Bookshelf = () => {
     const dispatch = useDispatch();
     const location = useLocation();
 
+    const initialState = { title: '', author: '', isbn: '', year: null, format: '', condition: '', details: '', imageURL: '' };
+    const [bookData, setBookData] = useState(initialState);
     const [currentBookId, setCurrentBookId] = useState(null);
     const [accordionExpanded, setAccordionExpanded] = useState(false);
 
@@ -23,6 +25,17 @@ const Bookshelf = () => {
         dispatch(getBooks());
     }, [dispatch]);
 
+    const clear = () => {
+        setCurrentBookId(null);
+        setBookData(initialState);
+    }
+
+    const handleEdit = (bookId) => {
+        clear();
+        setCurrentBookId(bookId);
+        setAccordionExpanded(true);
+        window.scrollTo(0,0);
+    }
 
     if (Userfront.accessToken()) {
         if (!user.name) dispatch(userLoggedIn(Userfront.user));
@@ -45,10 +58,10 @@ const Bookshelf = () => {
                     <Typography>Add a book</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <AddBookForm currentBookId={currentBookId} setCurrentBookId={setCurrentBookId} />
+                    <AddBookForm currentBookId={currentBookId} bookData={bookData} setBookData={setBookData} clear={clear} />
                 </AccordionDetails>
             </Accordion>
-            <BookGrid setCurrentBookId={setCurrentBookId} />
+            <BookGrid handleEdit={handleEdit} />
         </div>
     );
 }
