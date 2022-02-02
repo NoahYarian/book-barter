@@ -60,10 +60,10 @@ export const getBooksMatchingWishes = (books, wishes) => {
 }
 
 export const isMatchingBookOrAuthor = (book, wish) => {
-    return ((book.title === wish.title &&
-            book.author === wish.author)
+    return ((book.title.toLowerCase() === wish.title.toLowerCase() &&
+            book.author.toLowerCase() === wish.author.toLowerCase())
         || (wish.title === '' &&
-            book.author === wish.author));
+            book.author.toLowerCase() === wish.author.toLowerCase()));
 }
 
 export const getItemsForUser = (items, userId) => {
