@@ -42,10 +42,9 @@ const BookGrid = ({ setCurrentBookId }) => {
             <Dialog
                 open={open}
                 onClose={() => handleClose(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
+                aria-labelledby="book-alert-dialog-title"
             >
-                <DialogTitle id="alert-dialog-title">Delete this book?</DialogTitle>
+                <DialogTitle id="book-alert-dialog-title">Delete this book?</DialogTitle>
                 <DialogActions>
                     <Button onClick={() => handleClose(true)}>Yes</Button>
                     <Button onClick={() => handleClose(false)} autoFocus>No</Button>
