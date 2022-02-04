@@ -18,7 +18,15 @@ dotenv.config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+
+const corsOptions = {
+    "origin": process.env.ENVIRONMENT === "development" ? "*" : "https://book-barter.netlify.app",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+}
+
+app.use(cors(corsOptions));
 
 app.use('/user', userRoutes);
 app.use('/books', bookRoutes);
@@ -32,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 const httpServer = createServer(app);
-const io = new Server(httpServer);
+const io = new Server(httpServer, { cors: corsOptions });
 
 const PORT = process.env.PORT || 5000;
 
