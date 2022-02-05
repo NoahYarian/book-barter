@@ -2,9 +2,9 @@ import axios from 'axios';
 import Userfront from '@userfront/react';
 import { io } from 'socket.io-client';
 
-const API = axios.create({ baseURL: process.env.REACT_APP_ENVIRONMENT === 'production' ? 'https://book-barter-12.herokuapp.com' : 'http://localhost:5000' });
+const API = axios.create({ baseURL: process.env.NODE_ENV === 'production' ? 'https://book-barter-12.herokuapp.com' : 'http://localhost:5000' });
 
-export const socket = io(process.env.REACT_APP_ENVIRONMENT === 'production' ? 'wss://book-barter-12.herokuapp.com' : 'ws://localhost:5000', {transports: ['websocket']});
+export const socket = io(process.env.NODE_ENV === 'production' ? 'wss://book-barter-12.herokuapp.com' : 'ws://localhost:5000', {transports: ['websocket']});
 
 API.interceptors.request.use((req) => {
     if(Userfront.tokens?.accessToken) {
