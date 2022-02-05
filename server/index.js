@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
-    "origin": process.env.ENVIRONMENT === "development" ? "*" : "https://book-barter.netlify.app",
+    "origin": process.env.ENVIRONMENT === "development" ? "*" : "https://book-barter.noahyarian.com",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204
