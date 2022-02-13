@@ -25,10 +25,18 @@ const WishGrid = ({ handleEdit }) => {
 
     return (
         <>
-            <Grid container sx={{ mb: 1 }}>
+            <Grid container spacing={1.5} sx={{ mb: 1 }}>
                 {wishes.length > 0 ?
                     wishes.map((wish) => (
-                        <Grid item key={wish._id} sx={{ width: '100%', mt: 1 }}>
+                        <Grid item
+                            key={wish._id}
+                            xs={12} sm={6} md={4}
+                            sx={{
+                                width: '100%',
+                                '& .MuiPaper-root': { height: '100%' },
+                                '& .MuiPaper-root > .wishCardText': { height: 'calc(100% - 39px)' }
+                            }}
+                        >
                             <Wish wish={wish} confirmBeforeDelete={confirmBeforeDelete} handleEdit={handleEdit} />
                         </Grid>
                     )) :

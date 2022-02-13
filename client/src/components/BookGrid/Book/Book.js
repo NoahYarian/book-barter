@@ -6,7 +6,7 @@ const Book = ({ book, confirmBeforeDelete, handleEdit }) => {
 
     return (
         <Card elevation={4} sx={{ width: '100%', p: 1 }}>
-            <Box sx={{ float: 'left', width: '50%' }}>
+            <Box className="bookCardText" sx={{ float: 'left', width: '50%' }}>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>{book.title}</Typography>
                 <Typography variant="subtitle2">by {book.author}</Typography>
                 <Box sx={{ pt: 2, pb: 1 }}>
@@ -22,7 +22,7 @@ const Book = ({ book, confirmBeforeDelete, handleEdit }) => {
                     <img src={book.imageURL} alt="book cover" style={{ maxWidth: 100 + '%' }} />
                 </Box>
             }
-            <Box fullWidth>
+            <Box>
                 <Button size="small" variant="contained" color="primary" onClick={() => handleEdit(book._id)} sx={{ width: 'calc(50% - 4px)', mr: 1 }}>Edit</Button>
                 <Button size="small" variant="contained" color="error" onClick={() => confirmBeforeDelete(book._id)} sx={{ width: 'calc(50% - 4px)'}}>Delete</Button>
             </Box>

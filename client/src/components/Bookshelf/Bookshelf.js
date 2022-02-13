@@ -53,7 +53,7 @@ const Bookshelf = () => {
 
     return (
         <div>
-            <Accordion expanded={accordionExpanded} onChange={() => setAccordionExpanded(prev => !prev)}>
+            <Accordion expanded={accordionExpanded} onChange={() => setAccordionExpanded(prev => !prev)} sx={{ mb: accordionExpanded ? 0 : 1.5 }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>Add a book</Typography>
                 </AccordionSummary>
