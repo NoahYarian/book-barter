@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from '@mui/material';
 import Userfront from "@userfront/react";
 
 const ForgotPassword = () => {
@@ -8,9 +9,9 @@ const ForgotPassword = () => {
     });
     
     return (
-        <div>
+        <Container style={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "100vh" }}>
             <PasswordResetForm />
-        </div>
+        </Container>
     );
 }
 

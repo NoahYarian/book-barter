@@ -42,7 +42,7 @@ const Matches = () => {
             <Grid container>
                 {matches.length > 0 ?
                     matches.map((match) => (
-                        <Grid item key={match.theirUser.userId} sx={{ width: '100%' }}>
+                        <Grid item key={match.theirUser.userId} md={6} sx={{ width: '100%' }}>
                             <Match match={match} />
                         </Grid>
                     )) :

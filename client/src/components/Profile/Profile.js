@@ -36,7 +36,7 @@ const Profile = () => {
     }
 
     return (
-        <>
+        <Box sx={{ width: { md: '60%' }, m: { md: 'auto' } }}>
             <Box>
                 <Avatar
                     alt={userData.imageURL}
@@ -103,8 +103,7 @@ const Profile = () => {
                     <Typography>Save Changes</Typography>
                 </Button>
             </Box>
-
-        </>
+        </Box>
     );
 }
 
