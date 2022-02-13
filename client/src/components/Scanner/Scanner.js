@@ -1,10 +1,13 @@
 import {Html5QrcodeScanner} from "html5-qrcode"
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import { Box, Button } from '@mui/material';
 
 const Scanner = ({ handleCloseScanner, backdropIsOpen, bookLookupFromISBN}) => {
 
+    let html5QrcodeScanner = useRef(null);
+
     useEffect(() => {
-        let html5QrcodeScanner = new Html5QrcodeScanner(
+        html5QrcodeScanner.current = new Html5QrcodeScanner(
             "reader",
             {
                 fps: 10,
@@ -22,19 +25,26 @@ const Scanner = ({ handleCloseScanner, backdropIsOpen, bookLookupFromISBN}) => {
 
             bookLookupFromISBN(decodedText);
 
-            html5QrcodeScanner.pause();
-            handleCloseScanner();
+            closeScanner();
         }
 
         const onScanFailure = (error) => console.log(`Code scan error = ${error}`);
 
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        html5QrcodeScanner.current.render(onScanSuccess, onScanFailure);
 
-        if (!backdropIsOpen) html5QrcodeScanner.clear();
+        if (!backdropIsOpen) html5QrcodeScanner.current.clear();
     });
 
+    const closeScanner = () => {
+        if (html5QrcodeScanner.current?.getState() === 2) html5QrcodeScanner.current?.pause();
+        handleCloseScanner();
+    }
+
     return (
-        <div id="reader" style={{ width: "500px", backgroundColor: "#fff" }}></div>
+        <Box>
+            <div id="reader" style={{ width: "500px", backgroundColor: "#fff" }}></div>
+            <Button variant="contained" color="error" size="small" onClick={closeScanner} fullWidth>Close Scanner</Button>
+        </Box>
     );
 }
 

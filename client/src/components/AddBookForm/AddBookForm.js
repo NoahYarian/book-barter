@@ -74,8 +74,7 @@ const AddBookForm = ({ currentBookId, bookData, setBookData, clear }) => {
             </Button>
 
             <Backdrop open={backdropIsOpen} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-                <Button variant="outlined" color="secondary" size="small" onClick={handleCloseScanner}>Close Scanner</Button>
-                <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen}  bookLookupFromISBN={bookLookupFromISBN} />
+                <Scanner handleCloseScanner={handleCloseScanner} backdropIsOpen={backdropIsOpen} bookLookupFromISBN={bookLookupFromISBN} />
             </Backdrop>
 
             <Box fullWidth sx={{  textAlign: 'center' }}>
