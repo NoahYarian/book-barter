@@ -28,9 +28,13 @@ const AddWishForm = ({ currentWishId, wishData, setWishData, clear }) => {
     }
     return (
         <Box
+            onSubmit={handleSubmit}
             component="form"
             autoComplete="off"
-            onSubmit={handleSubmit}
+            sx={{
+                width: { md: '60%' },
+                margin: { md: 'auto' }
+            }}
         >
             <TextField sx={{ mt: -1 }} name="title" variant="outlined" label="Title" value={wishData.title} onChange={(e) => setWishData({ ...wishData, title: e.target.value })} fullWidth />
             <TextField sx={{ mt: 1 }} name="author" variant="outlined" label="Author" value={wishData.author} onChange={(e) => setWishData({ ...wishData, author: e.target.value })} required fullWidth />

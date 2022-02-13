@@ -60,12 +60,14 @@ const AddBookForm = ({ currentBookId, bookData, setBookData, clear }) => {
 
     return (
         <Box
+            onSubmit={handleSubmit}
             component="form"
+            autoComplete="off"
             sx={{
+                width: { md: '60%' },
+                margin: { md: 'auto' },
                 '& .MuiTextField-root': { mt: 1 },
             }}
-            autoComplete="off"
-            onSubmit={handleSubmit}
         >
             <Button color="primary" variant="contained" onClick={handleToggleScanner} sx={{ mt: -1 }} fullWidth>
                 <Typography><FontAwesomeIcon icon={faBarcode} />&nbsp;&nbsp;Scan Barcode</Typography>
