@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import { Typography, TextField, Button, Box, Avatar } from '@mui/material';
+import { Typography, TextField, Button, Box, Avatar, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import Userfront from '@userfront/react';
 
 import { userLoggedIn, updateUser, logOut } from '../../actions/user';
@@ -48,7 +48,7 @@ const Profile = () => {
                 component="form"
                 onSubmit={handleSubmit}
                 autoComplete="off"
-                sx={{ '& .MuiTextField-root, .MuiButtonBase-root': { mt: 1 } }}
+                sx={{ '& .MuiTextField-root, .MuiButtonBase-root, .MuiFormControl-root': { mt: 1 } }}
             >
                 <TextField
                     disabled
@@ -66,6 +66,18 @@ const Profile = () => {
                     variant="outlined"
                     fullWidth
                 />
+                <FormControl disabled fullWidth>
+                    <InputLabel id="location-select-label">Location</InputLabel>
+                    <Select
+                        labelId="location-select-label"
+                        id="location-select"
+                        value="Nashville, TN"
+                        label="Location"
+                        onChange={() => {}}
+                    >
+                        <MenuItem value="Nashville, TN">Nashville, TN</MenuItem>
+                    </Select>
+                </FormControl>
                 <TextField
                     name="name"
                     label="Name"
